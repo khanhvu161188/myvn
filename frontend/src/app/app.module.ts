@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, Optional } from '@angular/core';
+import { BrowserModule, BrowserTransferStateModule, TransferState } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -9,15 +9,16 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { LAZY_MAPS_API_CONFIG_KEY, MY_API_KEY } from './services/ModifierLazyMapsAPILoader';
 
 
 @NgModule({
   imports: [
-    BrowserModule.withServerTransition({ appId: 'tour-of-heroes' }),
+    BrowserModule.withServerTransition({ appId: 'myvn-frontend' }),
+    BrowserTransferStateModule ,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
@@ -33,16 +34,24 @@ import { isPlatformBrowser } from '@angular/common';
     AppComponent,
   ],
   providers: [ 
-     
+  
   ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
-    @Inject(APP_ID) private appId: string) {
+    @Inject(APP_ID) private appId: string,
+    
+    @Optional() @Inject(LAZY_MAPS_API_CONFIG_KEY) private configKey: string = null,
+    
+    private state: TransferState
+    ) {
     const platform = isPlatformBrowser(platformId) ?
       'in the browser' : 'on the server';
     console.log(`Running ${platform} with appId=${appId}`);
+    if (isPlatformServer(platformId)) {
+      state.set(MY_API_KEY, configKey);
+    }
   }
 }

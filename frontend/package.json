@@ -1,5 +1,5 @@
 {
-  "name": "angular.io-example",
+  "name": "myvn",
   "version": "0.0.0",
   "description": "Example project from an angular.io guide.",
   "license": "MIT",
@@ -10,10 +10,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev:ssr": "ng run angular.io-example:serve-ssr",
+    "dev:ssr": "ng run myvn:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
-    "build:ssr": "ng build --prod && ng run angular.io-example:server:production",
-    "prerender": "ng run angular.io-example:prerender"
+    "build:ssr": "ng build --prod && ng run myvn:server:production",
+    "prerender": "ng run myvn:prerender"
   },
   "private": true,
   "dependencies": {

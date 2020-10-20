@@ -1,18 +1,19 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ValueProvider } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { WindowLocalRef, WindowRef } from '../services/WindowRef.service';
 import { GeoLocationService } from '../services/GeoLocation.service';
 import { MapComponent } from './map/map.component';
+import { ModifierLazyMapsAPILoader } from '../services/ModifierLazyMapsAPILoader';
+
+
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyACOLjTUMYHC2v02KnVKBEbX1-1oo4oTS0'
-    })
+    AgmCoreModule.forRoot()
   ],
   declarations: [
     DashboardComponent,
@@ -23,7 +24,7 @@ import { MapComponent } from './map/map.component';
       provide: WindowRef,
       useClass: WindowLocalRef
     },
-    GeoLocationService
+    GeoLocationService, {provide: MapsAPILoader, useClass: ModifierLazyMapsAPILoader}
   ]
 })
-export class DashboardModule {}
+export class DashboardModule { }
