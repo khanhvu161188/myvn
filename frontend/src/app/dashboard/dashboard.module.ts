@@ -7,13 +7,18 @@ import { WindowLocalRef, WindowRef } from '../services/WindowRef.service';
 import { GeoLocationService } from '../services/GeoLocation.service';
 import { MapComponent } from './map/map.component';
 import { ModifierLazyMapsAPILoader } from '../services/ModifierLazyMapsAPILoader';
+import { HttpClientModule } from '@angular/common/http';
+import { MapService } from './services/map-service';
+import { AgmMarkerClustererModule } from '@agm/markerclusterer';
 
 
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    AgmCoreModule.forRoot()
+    AgmCoreModule.forRoot(),
+    HttpClientModule,
+    AgmMarkerClustererModule
   ],
   declarations: [
     DashboardComponent,
@@ -24,7 +29,8 @@ import { ModifierLazyMapsAPILoader } from '../services/ModifierLazyMapsAPILoader
       provide: WindowRef,
       useClass: WindowLocalRef
     },
-    GeoLocationService, {provide: MapsAPILoader, useClass: ModifierLazyMapsAPILoader}
+    GeoLocationService, {provide: MapsAPILoader, useClass: ModifierLazyMapsAPILoader},
+    MapService
   ]
 })
 export class DashboardModule { }
