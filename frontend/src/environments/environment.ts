@@ -6,7 +6,8 @@
 export const environment = {
   production: false,
   port: 4000,
-  googleMapApiKey: "AIzaSyACOLjTUMYHC2v02KnVKBEbX1-1oo4oTS0"
+  googleMapApiKey: "AIzaSyACOLjTUMYHC2v02KnVKBEbX1-1oo4oTS0",
+  apiUrl: "http://staging.api.thamhoa.vn"
 };
 
 /*

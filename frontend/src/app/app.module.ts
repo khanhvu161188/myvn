@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { LAZY_MAPS_API_CONFIG_KEY, MY_API_KEY } from './services/ModifierLazyMapsAPILoader';
+import { EnvBrowserService, MY_API_URL, MY_API_URL_TOKEN } from './services/Env.service';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { LAZY_MAPS_API_CONFIG_KEY, MY_API_KEY } from './services/ModifierLazyMap
     AppComponent,
   ],
   providers: [ 
-  
+    EnvBrowserService
   ],
   bootstrap: [ AppComponent ]
 })
@@ -44,6 +45,7 @@ export class AppModule {
     @Inject(APP_ID) private appId: string,
     
     @Optional() @Inject(LAZY_MAPS_API_CONFIG_KEY) private configKey: string = null,
+    @Optional() @Inject(MY_API_URL_TOKEN) private apiUrl: string = null,
     
     private state: TransferState
     ) {
@@ -52,6 +54,7 @@ export class AppModule {
     console.log(`Running ${platform} with appId=${appId}`);
     if (isPlatformServer(platformId)) {
       state.set(MY_API_KEY, configKey);
+      state.set(MY_API_URL, apiUrl);
     }
   }
 }
