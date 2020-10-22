@@ -19,7 +19,6 @@ export class MapComponent implements OnInit {
   searchRq?: Subscription ;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService) {
-    this.isSearch = false;
   }
 
   ngOnInit() {
