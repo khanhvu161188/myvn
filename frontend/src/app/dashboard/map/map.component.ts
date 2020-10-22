@@ -1,19 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { GeoLocationService } from 'src/app/services/GeoLocation.service';
-import { MapService } from '../services/map-service';
-
-interface MarkerData {
-  id: string;
-  lat: number;
-  lon: number;
-  crisisStatus: number;
-  requestStatus: number;
-}
-
-interface SearchMarkerResponse {
-  data: MarkerData[];
-}
+import { MapService, MarkerData, SearchMarkerResponse } from '../services/map-service';
 
 @Component({
   selector: 'app-map',
@@ -40,7 +28,14 @@ export class MapComponent implements OnInit {
   }
 
   private showMarkersOnMap() {
-    this.mapService.searchMarkers().subscribe(
+    const request = {
+      bottomLeftLat: 15.09220550540362,
+      bottomLeftLon: 108.17582227979761,
+      topRightLat: 15.268479893074357,
+      topRightLon: 108.83500196729761
+    };
+
+    this.mapService.searchMarkers(request).subscribe(
       (res: SearchMarkerResponse) => {
         this.markers = res.data;
       },
