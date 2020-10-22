@@ -1,5 +1,6 @@
-<agm-map [latitude]="lat" [longitude]="lng" (boundsChange)="boundsChange($event)">
-  <agm-marker-cluster imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m">
+
+<agm-map [latitude]="lat" [longitude]="lng" (boundsChange)="boundsChange($event)" (idle)="mapIdle()">
+  <agm-marker-cluster  *ngIf="!isSearch" imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m">
     <agm-marker *ngFor="let marker of markers;" [latitude]="marker.lat" [longitude]="marker.lon" x></agm-marker>
   </agm-marker-cluster>
 </agm-map>
