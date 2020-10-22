@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "crisis-frontend.fullname" . }}
+  labels:
+{{ include "crisis-frontend.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: {{ include "crisis-frontend.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
