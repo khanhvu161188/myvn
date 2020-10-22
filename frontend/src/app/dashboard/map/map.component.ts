@@ -1,10 +1,7 @@
-import { AgmMap } from '@agm/core';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { GeoLocationService } from 'src/app/services/GeoLocation.service';
 import { ISearchMarkerRequest, MapService, MarkerData } from '../services/map-service';
-
-
 
 @Component({
   selector: 'app-map',
@@ -16,13 +13,17 @@ export class MapComponent implements OnInit {
   lng = 0;
   markers: MarkerData[] = [];
   request: ISearchMarkerRequest;
-  searchRq?: Subscription ;
+  searchRq?: Subscription;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService) {
   }
 
   ngOnInit() {
     this.getCurrentLocation();
+  }
+  public mapReady(map) {
+
+    map.addListener("rightclick", (e) => this.mapRightClick(e));
   }
 
   private getCurrentLocation() {
@@ -40,11 +41,12 @@ export class MapComponent implements OnInit {
       (res) => {
         // this.isSearch = true;
         const news = res.data.filter((data) => this.markers.findIndex(old => old.id === data.id) === -1);
-          this.markers = [...this.markers, ...news];
+        this.markers = [...this.markers, ...news];
       },
       err => {
         this.markers = [];
-        console.error(err)},
+        console.error(err)
+      },
       () => {
 
         console.log('done loading markers');
@@ -61,5 +63,10 @@ export class MapComponent implements OnInit {
     }
 
 
+  }
+
+  public mapRightClick(event: google.maps.MouseEvent, ...props: any[]) {
+    console.log(event, props);
+    alert(`right click to ${event.latLng.lat()}/${event.latLng.lng()}`);
   }
 }
