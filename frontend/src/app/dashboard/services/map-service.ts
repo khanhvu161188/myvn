@@ -33,6 +33,6 @@ export class MapService {
 
     // Uses http.get() to load data from a single API endpoint
     searchMarkers(request: SearchMarkerRequest) {
-        return this.http.post<SearchMarkerResponse>(`${environment.domain}/pod/v1/request/searchinbound`, request);
+        return this.http.post<SearchMarkerResponse>(`${environment.API_URL}/pod/v1/request/searchinbound`, request);
     }
 }
