@@ -11,8 +11,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { MapService } from './services/map-service';
 import { AgmMarkerClustererModule } from '@agm/markerclusterer';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { AddRequestDialogComponent } from './add-request-dialog/add-request-dialog.component';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatIconModule} from '@angular/material/icon';
+
+
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { EmeRequestService } from './services/eme-request-service';
+import { AddRequestTagsComponent } from './add-request-tags/add-request-tags.component';
 
 @NgModule({
   imports: [
@@ -21,20 +35,39 @@ import {MatListModule} from '@angular/material/list';
     AgmCoreModule.forRoot(),
     HttpClientModule,
     AgmMarkerClustererModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatIconModule
   ],
   declarations: [
     DashboardComponent,
     MapComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    AddRequestDialogComponent,
+    AddRequestTagsComponent,
+    AddRequestTagsComponent
   ],
+
+  entryComponents: [
+    MapComponent, AddRequestDialogComponent
+  ],
+
   providers: [
     {
       provide: WindowRef,
       useClass: WindowLocalRef
     },
-    GeoLocationService, {provide: MapsAPILoader, useClass: ModifierLazyMapsAPILoader},
-    MapService
+    GeoLocationService, { provide: MapsAPILoader, useClass: ModifierLazyMapsAPILoader },
+    MapService,
+    EmeRequestService
   ]
 })
 export class DashboardModule { }

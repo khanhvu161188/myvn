@@ -1,6 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { GeoLocationService } from 'src/app/services/GeoLocation.service';
+import { AddRequestDialogComponent } from '../add-request-dialog/add-request-dialog.component';
 import { ISearchMarkerRequest, MapService, MarkerData } from '../services/map-service';
 
 @Component({
@@ -20,7 +22,7 @@ export class MapComponent implements OnInit {
   ctxLng = 0;
   isShowContextMenu = false;
 
-  constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone) {
+  constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -87,7 +89,7 @@ export class MapComponent implements OnInit {
 
     this.ctxLat = event.latLng.lat();
     this.ctxLng = event.latLng.lng();
-    
+
     this.isShowContextMenu = true;
   }
 
@@ -95,8 +97,23 @@ export class MapComponent implements OnInit {
     this.isShowContextMenu = false;
   }
 
-  public onAddMissingPlace({lat, lng}: {lat: number, lng: number}) {
-    alert(`onAddMissingPlace to ${lat}/${lng}`);
+  public onAddMissingPlace({ lat, lng }: { lat: number, lng: number }) {
     this.hideContextMenu();
+    this.openDialog();
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddRequestDialogComponent, {
+      width: '500px',
+      data: { 
+        lat: this.ctxLat,
+        lng: this.ctxLng 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
 }
