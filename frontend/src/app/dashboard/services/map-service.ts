@@ -8,6 +8,7 @@ export interface MarkerData {
   crisisStatus: number;
   requestStatus: number;
 }
+import { environment } from 'src/environments/environment';
 
 export interface SearchMarkerResponse {
   data: MarkerData[];

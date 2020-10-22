@@ -17,6 +17,7 @@ export class MapComponent implements OnInit {
   markers: MarkerData[] = [];
   request: ISearchMarkerRequest;
   searchRq?: Subscription ;
+  isShowPanel = false;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService) {
   }
@@ -61,5 +62,21 @@ export class MapComponent implements OnInit {
     }
 
 
+  }
+
+  public clickedMarker(marker: MarkerData) {
+    this.showRequestInfoPanel();
+  }
+
+  public mapClicked($event: MouseEvent) {
+    this.hideRequestInfoPanel();
+  }
+
+  showRequestInfoPanel() {
+    this.isShowPanel = true;
+  }
+
+  hideRequestInfoPanel() {
+    this.isShowPanel = false;
   }
 }
