@@ -14,6 +14,7 @@ import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { LAZY_MAPS_API_CONFIG_KEY, MY_API_KEY } from './services/ModifierLazyMapsAPILoader';
 import { EnvBrowserService, MY_API_URL, MY_API_URL_TOKEN } from './services/Env.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -29,7 +30,9 @@ import { EnvBrowserService, MY_API_URL, MY_API_URL_TOKEN } from './services/Env.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,
