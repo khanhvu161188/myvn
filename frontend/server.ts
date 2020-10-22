@@ -7,7 +7,8 @@ import { AppServerModule, ngExpressEngine } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 import { LAZY_MAPS_API_CONFIG_KEY } from 'src/app/services/ModifierLazyMapsAPILoader';
-import { GOOGLE_MAP_API_KEY, PORT } from 'src/env';
+import { API_URL, GOOGLE_MAP_API_KEY, PORT } from 'src/env';
+import { MY_API_URL_TOKEN } from 'src/app/services/Env.service';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
@@ -21,6 +22,9 @@ export function app() {
     providers: [
       {
         provide: LAZY_MAPS_API_CONFIG_KEY, useValue: GOOGLE_MAP_API_KEY
+      },
+      {
+        provide: MY_API_URL_TOKEN, useValue: API_URL
       }
     ]
   }));
