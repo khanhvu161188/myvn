@@ -32,7 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       InMemoryDataService, { dataEncapsulation: false }
     ),
 
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
   ],
   declarations: [
     AppComponent,

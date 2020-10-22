@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GeoLocationService } from 'src/app/services/GeoLocation.service';
 import { ISearchMarkerRequest, MapService, MarkerData } from '../services/map-service';
@@ -14,16 +14,30 @@ export class MapComponent implements OnInit {
   markers: MarkerData[] = [];
   request: ISearchMarkerRequest;
   searchRq?: Subscription;
+  x = 0;
+  y = 0;
+  ctxLat = 0;
+  ctxLng = 0;
+  isShowContextMenu = false;
 
-  constructor(private geoService: GeoLocationService, private mapService: MapService) {
+  constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone) {
   }
 
   ngOnInit() {
     this.getCurrentLocation();
   }
-  public mapReady(map) {
+  public mapReady(map: google.maps.Map) {
 
-    map.addListener("rightclick", (e) => this.mapRightClick(e));
+    map.addListener("rightclick", (e) => {
+      this._ngZone.run(() => {
+        this.mapRightClick(e);
+      })
+    });
+    map.addListener("click", (e) => {
+      this._ngZone.run(() => {
+        this.hideContextMenu();
+      })
+    });
   }
 
   private getCurrentLocation() {
@@ -62,11 +76,27 @@ export class MapComponent implements OnInit {
       topRightLon: bound.getNorthEast().lng()
     }
 
-
+    this.hideContextMenu();
   }
 
-  public mapRightClick(event: google.maps.MouseEvent, ...props: any[]) {
-    console.log(event, props);
-    alert(`right click to ${event.latLng.lat()}/${event.latLng.lng()}`);
+  public mapRightClick(event: google.maps.MouseEvent) {
+    console.log((event as any).pixel);
+    // alert(`right click to ${event.latLng.lat()}/${event.latLng.lng()}`);
+    this.x = (event as any).pixel.x + 20;
+    this.y = (event as any).pixel.y;
+
+    this.ctxLat = event.latLng.lat();
+    this.ctxLng = event.latLng.lng();
+    
+    this.isShowContextMenu = true;
+  }
+
+  private hideContextMenu() {
+    this.isShowContextMenu = false;
+  }
+
+  public onAddMissingPlace({lat, lng}: {lat: number, lng: number}) {
+    alert(`onAddMissingPlace to ${lat}/${lng}`);
+    this.hideContextMenu();
   }
 }

@@ -10,6 +10,8 @@ import { ModifierLazyMapsAPILoader } from '../services/ModifierLazyMapsAPILoader
 import { HttpClientModule } from '@angular/common/http';
 import { MapService } from './services/map-service';
 import { AgmMarkerClustererModule } from '@agm/markerclusterer';
+import { ContextMenuComponent } from './context-menu/context-menu.component';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -18,11 +20,13 @@ import { AgmMarkerClustererModule } from '@agm/markerclusterer';
     DashboardRoutingModule,
     AgmCoreModule.forRoot(),
     HttpClientModule,
-    AgmMarkerClustererModule
+    AgmMarkerClustererModule,
+    MatListModule
   ],
   declarations: [
     DashboardComponent,
-    MapComponent
+    MapComponent,
+    ContextMenuComponent
   ],
   providers: [
     {
