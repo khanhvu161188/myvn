@@ -1,3 +1,19 @@
-<div [ngIf]="isShowPanel">
-  request info
+<div class="panel-container" *ngIf="isShowPanel">
+  <h2 class="request-info-title">Request Information</h2>
+
+  <div class="request-info">
+    <label>Họ Tên: </label>
+    <b>Trần Văn A</b>
+  </div>
+
+  <div class="request-info">
+    <label>Địa chỉ: </label>
+    <b>131 Thống Nhất, Tam Kỳ, Quảng Nam</b>
+  </div>
+
+  <div class="request-info">
+    <label>Tình nguyện viên gần nhất: </label>
+    <b><a>Nguyễn Văn A</a>,</b>
+    <b> <a>Nguyễn Văn B</a></b>
+  </div>
 </div>

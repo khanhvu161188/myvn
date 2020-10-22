@@ -12,7 +12,7 @@ export class MapComponent implements OnInit {
   lat = 0;
   lng = 0;
   markers: MarkerData[] = [];
-  isShowPanel = true;
+  isShowPanel = false;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService) { }
 
@@ -43,5 +43,22 @@ export class MapComponent implements OnInit {
       err => console.error(err),
       () => console.log('done loading markers')
       );
+  }
+
+  clickedMarker(marker: MarkerData) {
+    this.showRequestInfoPanel();
+  }
+
+  mapClicked($event: MouseEvent) {
+    console.log($event);
+    this.hideRequestInfoPanel();
+  }
+
+  showRequestInfoPanel() {
+    this.isShowPanel = true;
+  }
+
+  hideRequestInfoPanel() {
+    this.isShowPanel = false;
   }
 }
