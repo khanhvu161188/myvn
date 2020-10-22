@@ -1,0 +1,17 @@
+.panel-container {
+  position: fixed;
+  width: 300px;
+  height: 100vh;
+  background: #fff;
+  top: 0;
+  left: 0;
+  padding: 16px;
+}
+
+.request-info {
+  margin-bottom: 8px;
+}
+
+.request-info-title {
+  margin-top: 0;
+}
