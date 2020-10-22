@@ -48,6 +48,9 @@ tolerations: []
 
 affinity: {}
 
+env: 
+  GOOGLE_MAP_API_KEY: GOOGLE_MAP_API_KEY
+  API_URL: API_URL
 configValues: |
   const wConfig = {};
   wConfig.APP_API_URL = "";
