@@ -3,11 +3,12 @@ services:
     myvn-frontend:
       build:
         context: .
-        dockerfile: ./Dockerfile 
+        dockerfile: ./Dockerfile
       working_dir: /application
       ports:
         - 4000:4000
       environment:
         - PORT=4000
         - GOOGLE_MAP_API_KEY=AIzaSyACOLjTUMYHC2v02KnVKBEbX1-1oo4oTS0
+        - domain=https://stagingapi.thamhoa.vn
       tty: true
