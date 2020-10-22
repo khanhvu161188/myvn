@@ -10,6 +10,7 @@ import { ModifierLazyMapsAPILoader } from '../services/ModifierLazyMapsAPILoader
 import { HttpClientModule } from '@angular/common/http';
 import { MapService } from './services/map-service';
 import { AgmMarkerClustererModule } from '@agm/markerclusterer';
+import { RequestInfoComponent } from './map/request-info/request-info.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AgmMarkerClustererModule } from '@agm/markerclusterer';
   ],
   declarations: [
     DashboardComponent,
-    MapComponent
+    MapComponent,
+    RequestInfoComponent
   ],
   providers: [
     {

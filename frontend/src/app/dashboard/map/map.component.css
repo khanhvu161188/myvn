@@ -1,3 +1,7 @@
 agm-map {
   height: 100%;
 }
+
+.map-container {
+  position: relative;
+}
