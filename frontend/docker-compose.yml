@@ -10,4 +10,5 @@ services:
       environment:
         - PORT=4000
         - GOOGLE_MAP_API_KEY=AIzaSyACOLjTUMYHC2v02KnVKBEbX1-1oo4oTS0
+        - API_URL=http://staging.api.thamhoa.vn
       tty: true

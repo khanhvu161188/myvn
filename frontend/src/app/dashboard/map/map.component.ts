@@ -1,24 +1,13 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GeoLocationService } from 'src/app/services/GeoLocation.service';
-import { MapService } from '../services/map-service';
+import { ISearchMarkerRequest, MapService, MarkerData } from '../services/map-service';
 
-interface MarkerData {
-  id: string;
-  lat: number;
-  lon: number;
-  crisisStatus: number;
-  requestStatus: number;
-}
 
-interface SearchMarkerResponse {
-  data: MarkerData[];
-}
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: [ './map.component.css' ]
+  styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
   lat = 0;
@@ -29,7 +18,6 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentLocation();
-    this.showMarkersOnMap();
   }
 
   private getCurrentLocation() {
@@ -39,13 +27,20 @@ export class MapComponent implements OnInit {
     })
   }
 
-  private showMarkersOnMap() {
-    this.mapService.searchMarkers().subscribe(
-      (res: SearchMarkerResponse) => {
+  public boundsChange(bound: google.maps.LatLngBounds) {
+    const request: ISearchMarkerRequest = {
+      bottomLeftLat: bound.getSouthWest().lat(),
+      bottomLeftLon: bound.getSouthWest().lng(),
+      topRightLat: bound.getNorthEast().lat(),
+      topRightLon: bound.getNorthEast().lng()
+    }
+
+    this.mapService.searchMarkers(request).subscribe(
+      (res) => {
         this.markers = res.data;
       },
       err => console.error(err),
       () => console.log('done loading markers')
-      );
+    );
   }
 }

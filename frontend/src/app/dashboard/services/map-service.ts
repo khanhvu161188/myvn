@@ -1,25 +1,39 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-// import { Observable } from "rxjs/Observable";
+import { EnvBrowserService, MY_API_URL } from 'src/app/services/Env.service';
+export interface MarkerData {
+  id: string;
+  lat: number;
+  lon: number;
+  crisisStatus: number;
+  requestStatus: number;
+}
 
+export interface SearchMarkerResponse {
+  data: MarkerData[];
+}
+
+export interface ISearchMarkerRequest {
+  bottomLeftLat: number;
+  bottomLeftLon: number;
+  topRightLat: number;
+  topRightLon: number;
+}
 const httpOptions = {
-    headers: new HttpHeaders({ "Content-Type": "application/json" })
+  headers: new HttpHeaders({ "Content-Type": "application/json" })
 };
 
 @Injectable()
 export class MapService {
 
-    constructor(private http:HttpClient) {}
+  private apiUrl: string;
+  constructor(private http: HttpClient, envService: EnvBrowserService) { 
+    this.apiUrl = envService.get(MY_API_URL);
+  }
 
-    // Uses http.get() to load data from a single API endpoint
-    searchMarkers() {
-      const request = {
-        bottomLeftLat: 15.09220550540362,
-        bottomLeftLon: 108.17582227979761,
-        topRightLat: 15.268479893074357,
-        topRightLon: 108.83500196729761
-      };
+  // Uses http.get() to load data from a single API endpoint
+  searchMarkers(request: ISearchMarkerRequest) {
 
-        return this.http.post("http://staging.api.thamhoa.vn/pod/v1/request/searchinbound", request);
-    }
+    return this.http.post<SearchMarkerResponse>(`${this.apiUrl}/pod/v1/request/searchinbound`, request);
+  }
 }
