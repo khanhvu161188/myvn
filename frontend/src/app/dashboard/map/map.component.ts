@@ -12,6 +12,7 @@ export class MapComponent implements OnInit {
   lat = 0;
   lng = 0;
   markers: MarkerData[] = [];
+  isShowPanel = true;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService) { }
 

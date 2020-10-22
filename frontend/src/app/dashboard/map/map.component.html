@@ -1,5 +1,8 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker-cluster imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m">
-    <agm-marker *ngFor="let marker of markers;" [latitude]="marker.lat" [longitude]="marker.lon" x></agm-marker>
-  </agm-marker-cluster>
-</agm-map>
+<div class="map-container">
+  <app-map-request-info [isShowPanel]="isShowPanel"></app-map-request-info>
+  <agm-map [latitude]="lat" [longitude]="lng">
+    <agm-marker-cluster imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m">
+      <agm-marker *ngFor="let marker of markers;" [latitude]="marker.lat" [longitude]="marker.lon" x></agm-marker>
+    </agm-marker-cluster>
+  </agm-map>
+</div>
