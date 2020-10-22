@@ -27,7 +27,7 @@ const httpOptions = {
 export class MapService {
 
   private apiUrl: string;
-  constructor(private http: HttpClient, envService: EnvBrowserService) { 
+  constructor(private http: HttpClient, private envService: EnvBrowserService) { 
     this.apiUrl = envService.get(MY_API_URL);
   }
 

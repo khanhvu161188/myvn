@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AgmMap } from '@agm/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Subscription, timer } from 'rxjs';
 import { GeoLocationService } from 'src/app/services/GeoLocation.service';
 import { ISearchMarkerRequest, MapService, MarkerData } from '../services/map-service';
 
@@ -13,8 +15,13 @@ export class MapComponent implements OnInit {
   lat = 0;
   lng = 0;
   markers: MarkerData[] = [];
+  request: ISearchMarkerRequest;
+  isSearch: boolean;
+  searchRq?: Subscription ;
 
-  constructor(private geoService: GeoLocationService, private mapService: MapService) { }
+  constructor(private geoService: GeoLocationService, private mapService: MapService) {
+    this.isSearch = false;
+  }
 
   ngOnInit() {
     this.getCurrentLocation();
@@ -27,20 +34,36 @@ export class MapComponent implements OnInit {
     })
   }
 
+  public mapIdle() {
+    if (this.searchRq) {
+      this.searchRq.unsubscribe();
+    }
+    this.searchRq = this.mapService.searchMarkers(this.request).subscribe(
+      (res) => {
+        this.isSearch = true;
+        timer(100).subscribe(() => {
+          this.markers = res.data;
+          this.isSearch = false;
+        })
+      },
+      err => {
+        this.markers = [];
+        console.error(err)},
+      () => {
+
+        console.log('done loading markers');
+      }
+    );
+  }
+
   public boundsChange(bound: google.maps.LatLngBounds) {
-    const request: ISearchMarkerRequest = {
+    this.request = {
       bottomLeftLat: bound.getSouthWest().lat(),
       bottomLeftLon: bound.getSouthWest().lng(),
       topRightLat: bound.getNorthEast().lat(),
       topRightLon: bound.getNorthEast().lng()
     }
 
-    this.mapService.searchMarkers(request).subscribe(
-      (res) => {
-        this.markers = res.data;
-      },
-      err => console.error(err),
-      () => console.log('done loading markers')
-    );
+
   }
 }
