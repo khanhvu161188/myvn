@@ -16,7 +16,6 @@ export class MapComponent implements OnInit {
   lng = 0;
   markers: MarkerData[] = [];
   request: ISearchMarkerRequest;
-  isSearch: boolean;
   searchRq?: Subscription ;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService) {
@@ -40,11 +39,9 @@ export class MapComponent implements OnInit {
     }
     this.searchRq = this.mapService.searchMarkers(this.request).subscribe(
       (res) => {
-        this.isSearch = true;
-        timer(100).subscribe(() => {
-          this.markers = res.data;
-          this.isSearch = false;
-        })
+        // this.isSearch = true;
+        const news = res.data.filter((data) => this.markers.findIndex(old => old.id === data.id) === -1);
+          this.markers = [...this.markers, ...news];
       },
       err => {
         this.markers = [];
