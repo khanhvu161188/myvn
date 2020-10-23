@@ -44,7 +44,10 @@ export class AddRequestDialogComponent implements OnInit {
   }
 
   private getAllTags() {
-    this.emeRequestService.tagsList().subscribe((data) => this.allTags = data);
+    this.emeRequestService.tagsList().subscribe((data) => {
+      console.log({data})
+      this.allTags = data
+    });
   }
 
   public onNoClick() {

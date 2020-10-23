@@ -7,7 +7,7 @@ export interface ITag {
   tagValue: string;
 }
 export interface ITagResponse {
-  name: string;
+  value: string;
   colorCode: null;
   isDeleted: boolean;
   id: string;
@@ -51,7 +51,7 @@ export class EmeRequestService {
     return this.http.get<ITagResponse[]>(`${this.apiUrl}/pod/v1/misc/tags/list`).pipe(
       map(
         data => data.map(
-          ({ id, name }) => ({ id, tagValue: name })
+          ({ id, value }) => ({ id, tagValue: value })
         )
       )
     );
