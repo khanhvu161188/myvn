@@ -109,7 +109,7 @@ export class MapComponent implements OnInit {
       width: '500px',
       data: {
         lat: this.ctxLat,
-        lng: this.ctxLng
+        lon: this.ctxLng 
       }
     });
 
