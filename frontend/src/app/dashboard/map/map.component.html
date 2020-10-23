@@ -1,10 +1,14 @@
 
 <div class="root">
-
   <agm-map [latitude]="lat" [longitude]="lng" (boundsChange)="boundsChange($event)" (idle)="mapIdle()" (mapReady)="mapReady($event)">
     <agm-marker-cluster imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m">
-      <agm-marker *ngFor="let marker of markers;" [latitude]="marker.lat" [longitude]="marker.lon" x></agm-marker>
+      <agm-marker *ngFor="let marker of markers"
+      [latitude]="marker.lat"
+      [longitude]="marker.lon"
+      (markerClick)="clickedMarker(marker)"
+    ></agm-marker>
     </agm-marker-cluster>
   </agm-map>
   <app-context-menu *ngIf="isShowContextMenu" [x]="x" [y]="y" [lat]="ctxLat" [lng]="ctxLng" (onAddMissingPlace)="onAddMissingPlace($event)" ></app-context-menu>
+  <app-map-request-info [isShowPanel]="isShowPanel" [selectedRequest]="selectedRequest" (hidePanelEvent)="hideRequestInfoPanel()"></app-map-request-info>
 </div>

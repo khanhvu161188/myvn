@@ -27,6 +27,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { EmeRequestService } from './services/eme-request-service';
 import { AddRequestTagsComponent } from './add-request-tags/add-request-tags.component';
+import { RequestInfoComponent } from './map/request-info/request-info.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,7 @@ import { AddRequestTagsComponent } from './add-request-tags/add-request-tags.com
     ContextMenuComponent,
     AddRequestDialogComponent,
     AddRequestTagsComponent,
-    AddRequestTagsComponent
+    RequestInfoComponent
   ],
 
   entryComponents: [

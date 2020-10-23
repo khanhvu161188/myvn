@@ -1,12 +1,29 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvBrowserService, MY_API_URL } from 'src/app/services/Env.service';
+
 export interface MarkerData {
   id: string;
   lat: number;
   lon: number;
-  crisisStatus: number;
-  requestStatus: number;
+  crisisStatus: MarkerDataStatus;
+  requestStatus: MarkerDataRequestStatus;
+  tags: string[];
+}
+
+export enum MarkerDataStatus {
+  Low = 0,
+  Medium = 1,
+  High = 2,
+  Critical = 3
+}
+
+export enum MarkerDataRequestStatus {
+  New = 0, //when a request created, its New status.
+  Verified = 1, //When someone contact the request's owner to verify and then change to this status so that other can help
+  Processing = 2, //When someone is processing this request
+  Finished = 3, //When request is completely solved
+  Reopen = 4 //When something wrong.
 }
 
 export interface SearchMarkerResponse {
@@ -27,7 +44,7 @@ const httpOptions = {
 export class MapService {
 
   private apiUrl: string;
-  constructor(private http: HttpClient, private envService: EnvBrowserService) { 
+  constructor(private http: HttpClient, private envService: EnvBrowserService) {
     this.apiUrl = envService.get(MY_API_URL);
   }
 
