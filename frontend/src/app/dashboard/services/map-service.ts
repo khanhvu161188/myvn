@@ -8,6 +8,7 @@ export interface MarkerData {
   lon: number;
   crisisStatus: MarkerDataStatus;
   requestStatus: MarkerDataRequestStatus;
+  tags: string[];
 }
 
 export enum MarkerDataStatus {

@@ -13,13 +13,9 @@
   </h3>
 
   <div class="category">
-    <div class="category-item">
+    <div class="category-item" *ngFor="let tag of selectedTags">
       <mat-icon aria-hidden="false" class="category-item-checked-icon">done</mat-icon>
-      Thực phẩm
-    </div>
-    <div class="category-item">
-      <mat-icon aria-hidden="false" class="category-item-checked-icon">done</mat-icon>
-      Thuốc men
+      {{tag.tagValue}}
     </div>
   </div>
 

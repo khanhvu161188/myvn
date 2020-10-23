@@ -11,12 +11,13 @@ import { MarkerData, MarkerDataStatus, MarkerDataRequestStatus } from '../../ser
 export class RequestInfoComponent implements OnInit {
   @Input() isShowPanel = false;
   @Input() selectedRequest: MarkerData | null = null;
+  @Output() hidePanelEvent = new EventEmitter();
   allTags: ITag[] = [];
+  selectedTags: ITag[] = [];
   priorityText = "";
   priorityClass = "";
   requestStatusText = "";
   requestStatusClass = "";
-  @Output() hidePanelEvent = new EventEmitter();
 
   constructor(private emeRequestService: EmeRequestService) { }
 
@@ -38,6 +39,8 @@ export class RequestInfoComponent implements OnInit {
 
       this.requestStatusText = this.getRequestStatusText(this.selectedRequest.requestStatus);
       this.requestStatusClass = this.getRequestStatusClass(this.selectedRequest.requestStatus);
+
+      this.selectedTags = this.allTags.filter(t => this.selectedRequest.tags.includes(t.id));
     }
   }
 

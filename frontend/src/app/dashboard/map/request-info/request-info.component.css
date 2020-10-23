@@ -71,6 +71,7 @@
   margin-bottom: 8px;
   display: flex;
   position: relative;
+  min-height: 20px;
 }
 
 .category-item {
