@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Thêm yêu cầu cứu trợ</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formGroup">
+
+        <p>Những thông tin có dấu * là bắt buộc.</p>
+        <mat-form-field appearance="fill">
+            <mat-label>Trạng thái khẩn cấp:</mat-label>
+            <mat-select [formControl]="crisisStatus" required>
+                <mat-option value="10">
+                    Thấp
+                </mat-option>
+                <mat-option value="20">
+                    Bình Thường
+                </mat-option>
+                <mat-option value="30">
+                    Cao
+                </mat-option>
+                <mat-option value="40">
+                    Khẩn cấp
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Số người:</mat-label>
+            <input matInput formControlName="personNumber" type="number">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Người liên lạc:</mat-label>
+            <input matInput formControlName="contactName" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Điện thoại liên lạc:</mat-label>
+            <input matInput formControlName="contactPhone" required type="tel">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Email liên lạc:</mat-label>
+            <input matInput formControlName="contactEmail" type="email">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Hướng dẫn cách đến:</mat-label>
+            <textarea matInput formControlName="instructionDetail"></textarea>
+        </mat-form-field>
+
+            <app-add-request-tags [allTags]="allTagsStr" [tags]="tags" (onChange)="tagsChange($event)"></app-add-request-tags>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Thoát</button>
+    <button mat-button [disabled]="formInvalid" cdkFocusInitial  (click)="onSubmit()">Xong</button>
+</div>
