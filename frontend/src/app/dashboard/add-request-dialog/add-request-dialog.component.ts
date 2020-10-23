@@ -76,7 +76,7 @@ export class AddRequestDialogComponent implements OnInit {
       personNumber: this.formGroup.value.personNumber,
       crisisStatus: parseInt(this.crisisStatus.value) ,
       lat: this.data.lat,
-      lon: this.data.lat,
+      lon: this.data.lon,
       tags: this.formTags
     }).subscribe((resp) => {
       console.log(resp);
