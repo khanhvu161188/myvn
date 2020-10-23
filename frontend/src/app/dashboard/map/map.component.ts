@@ -21,6 +21,7 @@ export class MapComponent implements OnInit {
   ctxLat = 0;
   ctxLng = 0;
   isShowContextMenu = false;
+  isShowPanel = true;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone, public dialog: MatDialog) {
   }
@@ -115,5 +116,29 @@ export class MapComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+
+  public clickedMarker(marker: MarkerData) {
+    this.showRequestInfoPanel();
+  }
+
+  public mapClicked($event: MouseEvent) {
+    this.hideRequestInfoPanel();
+  }
+
+  showRequestInfoPanel() {
+    this.isShowPanel = true;
+  }
+
+  hideRequestInfoPanel() {
+    this.isShowPanel = false;
+  }
+
+
+
+
+
+
+
 
 }

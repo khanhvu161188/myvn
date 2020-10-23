@@ -1,0 +1,132 @@
+.panel-container {
+  position: fixed;
+  width: 300px;
+  height: 100vh;
+  background: #fff;
+  top: 0;
+  left: 0;
+  box-shadow: 1px 0px 6px #aaa;
+  border-right: 1px solid #aaa;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 24px;
+  padding: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #a8a8a8;
+  font-weight: normal;
+}
+
+.category {
+  padding: 8px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 8px;
+  min-height: 20px;
+}
+.category::after {
+  clear: both;
+  content: '';
+}
+
+.category-item {
+  float: left;
+  margin-right: 10px;
+}
+
+.information {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.information-item {
+  margin-bottom: 16px;
+}
+
+.information-confirm {
+  text-align: center;
+}
+
+.information-confirm .tags {
+  margin: 0 auto;
+  width: 100px;
+}
+
+.volunteers {
+  padding: 8px;
+}
+
+.tags {
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 6px;
+}
+
+.volunteers-title-contain {
+  height: 50px;
+}
+.volunteers-title-contain::after {
+  clear: both;
+  content: '';
+}
+.volunteers-title {
+  float: left;
+  width: calc(100% - 80px);
+  font-weight: bold;
+  padding-top: 5px;
+}
+.volunteer-area {
+  float: left;
+  width: 80px;
+  text-align: center;
+}
+
+.volunteers-filters {
+  margin-bottom: 16px;
+}
+.volunteers-filters-item {
+  display: inline-block;
+  min-width: 60px;
+  text-align: center;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.volunteers-item {
+  margin-bottom: 16px;
+}
+
+.volunteers-item-title {
+  display: flex;
+}
+.volunteers-item-icon {
+  width: 30px;
+}
+.volunteers-item-icon-signal {
+  width: 30px;
+  height: 30px;
+  background: #2d26ff;
+  color: #fff;
+  text-align: center;
+  border-radius: 50%;
+}
+.volunteers-item-icon-signal-text {
+  position: relative;
+  top: 5px;
+}
+.volunteers-item-info {
+  flex: 1;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+.volunteers-item-phone {
+  color: #a8a8a8;
+}
+.volunteers-item-service {
+  color: #a8a8a8;
+}
