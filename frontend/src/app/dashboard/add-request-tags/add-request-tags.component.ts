@@ -70,6 +70,7 @@ export class AddRequestTagsComponent  {
     this.tags.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
     this.fruitCtrl.setValue(null);
+    this.onChange.emit(this.tags);
   }
 
   private _filter(value: string): string[] {
