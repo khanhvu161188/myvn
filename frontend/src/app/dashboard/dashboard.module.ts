@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MapService } from './services/map-service';
 import { AgmMarkerClustererModule } from '@agm/markerclusterer';
 import { RequestInfoComponent } from './map/request-info/request-info.component';
-
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
   imports: [
@@ -19,7 +19,8 @@ import { RequestInfoComponent } from './map/request-info/request-info.component'
     DashboardRoutingModule,
     AgmCoreModule.forRoot(),
     HttpClientModule,
-    AgmMarkerClustererModule
+    AgmMarkerClustererModule,
+    MatIconModule
   ],
   declarations: [
     DashboardComponent,

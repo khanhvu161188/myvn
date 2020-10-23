@@ -17,7 +17,7 @@ export class MapComponent implements OnInit {
   markers: MarkerData[] = [];
   request: ISearchMarkerRequest;
   searchRq?: Subscription ;
-  isShowPanel = false;
+  isShowPanel = true;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService) {
   }
