@@ -10,5 +10,12 @@
     </agm-marker-cluster>
   </agm-map>
   <app-context-menu *ngIf="isShowContextMenu" [x]="x" [y]="y" [lat]="ctxLat" [lng]="ctxLng" (onAddMissingPlace)="onAddMissingPlace($event)" ></app-context-menu>
-  <app-map-request-info [isShowPanel]="isShowPanel" [selectedRequest]="selectedRequest" (hidePanelEvent)="hideRequestInfoPanel()"></app-map-request-info>
+  <app-map-request-info
+    [isShowPanel]="isShowPanel"
+    [selectedRequest]="selectedRequest"
+    (hidePanelEvent)="hideRequestInfoPanel()"
+    [volunteers]="volunteers"
+    (searchVolunteersEvent)="searchVolunteers($event)"
+  >
+</app-map-request-info>
 </div>

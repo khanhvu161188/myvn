@@ -158,6 +158,11 @@
 .volunteer-area .tags {
   position: relative;
   padding-left: 24px;
+  cursor: pointer;
+}
+.volunteer-area .tags:hover {
+  background: #a4eaa1;
+  color: #fff;
 }
 .volunteer-area-icon {
   position: absolute;
@@ -165,6 +170,9 @@
   left: 5px;
   font-size: 18px;
   color: #6FBC6D;
+}
+.volunteer-area .tags:hover .volunteer-area-icon{
+  color: #fff;
 }
 
 .volunteers-filters {
@@ -177,6 +185,15 @@
   margin-right: 8px;
   margin-bottom: 8px;
   font-size: 12px;
+  cursor: pointer;
+}
+.volunteers-filters-item:hover {
+  background: #a4eaa1;
+  color: #fff;
+}
+.volunteers-filters-item.active {
+  background: #6FBC6D;
+  color: #fff;
 }
 
 .volunteers-item {
