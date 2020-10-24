@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { GeoLocationService } from 'src/app/services/GeoLocation.service';
 import { AddRequestDialogComponent } from '../add-request-dialog/add-request-dialog.component';
-import { ISearchMarkerRequest, MapService, MarkerData } from '../services/map-service';
+import { ISearchMarkerRequest, MapService, MarkerData, MarkerDetailData } from '../services/map-service';
 
 @Component({
   selector: 'app-map',
@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
   ctxLng = 0;
   isShowContextMenu = false;
   isShowPanel = false;
-  selectedRequest: MarkerData | null = null;
+  selectedRequest: MarkerDetailData | null = null;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone, public dialog: MatDialog) {
   }
@@ -125,7 +125,18 @@ export class MapComponent implements OnInit {
 
   showRequestInfoPanel(marker: MarkerData) {
     this.isShowPanel = true;
-    this.selectedRequest = marker;
+
+    this.mapService.getMarkerDetail(marker.id).subscribe(
+      (res) => {
+        this.selectedRequest = res;
+      },
+      err => {
+        console.error(err)
+      },
+      () => {
+        console.log('done loading marker detail');
+      }
+    );
   }
 
   public hideRequestInfoPanel() {
