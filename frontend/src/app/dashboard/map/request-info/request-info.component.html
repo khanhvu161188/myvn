@@ -1,140 +1,141 @@
-<div class="panel-container" *ngIf="isShowPanel">
+<div class="panel-container" *ngIf="isShowPanel && selectedRequest !== null">
   <div class="collapse-panel" (click)="hidePanel()">
     <mat-icon aria-hidden="false" class="collapse-panel-icon">arrow_left</mat-icon>
   </div>
   <h3 class="title">
-    Có 3 Tiền Lãnh
-    <div class="subtitle" [ngClass]="priorityClass">
-      Độ ưu tiên: {{priorityText}}
+    {{selectedRequest.contactName}}
+    <div class="subtitle">
+      Độ ưu tiên: <span [ngClass]="priorityClass">{{priorityText}}</span>
     </div>
-    <div class="subtitle" [ngClass]="requestStatusClass">
-      Trạng thái: {{requestStatusText}}
+    <div class="subtitle">
+      Trạng thái: <span [ngClass]="requestStatusClass">{{requestStatusText}}</span>
     </div>
   </h3>
 
   <div class="category">
-    <div class="category-item" *ngFor="let tag of selectedTags">
-      <mat-icon aria-hidden="false" class="category-item-checked-icon">done</mat-icon>
+    <div class="category-item tags" *ngFor="let tag of selectedRequest.tags">
       {{tag.tagValue}}
     </div>
   </div>
 
-  <div class="information">
-    <div class="information-item">
-      <mat-icon aria-hidden="false" class="information-item-icon">location_on</mat-icon>
-      Số 10, Nguyễn Thái Tông, Hà Tĩnh
-    </div>
-    <div class="information-item">
-      <mat-icon aria-hidden="false" class="information-item-icon">access_time</mat-icon>
-      Yêu cầu giúp đỡ: 20 phút trước
-    </div>
-    <div class="information-item">
-      <mat-icon aria-hidden="false" class="information-item-icon">alt_route</mat-icon>
-      Hướng dẫn đường đi
-    </div>
-    <div class="information-item">
-      <mat-icon aria-hidden="false" class="information-item-icon">people_alt</mat-icon>
-      5 người
-    </div>
-    <div class="information-item">
-      <mat-icon aria-hidden="false" class="information-item-icon">phone</mat-icon>
-      028 445 448
-    </div>
-    <div class="information-item">
-      <mat-icon aria-hidden="false" class="information-item-icon">info</mat-icon>
-      Thông tin thêm
-    </div>
-
-    <div class="information-confirm">
-      <div class="tags">
-        <mat-icon aria-hidden="false" class="information-confirm-icon">feedback</mat-icon>
-        <span class="information-confirm-text">
-          Xác nhận
-        </span>
+  <cdk-virtual-scroll-viewport class="panel-scroll" [itemSize]="200">
+    <div class="information">
+      <div class="information-item">
+        <mat-icon aria-hidden="false" class="information-item-icon">phone</mat-icon>
+        Điện thoại: {{selectedRequest.contactPhone}}
       </div>
-    </div>
-  </div>
+      <div class="information-item">
+        <mat-icon aria-hidden="false" class="information-item-icon">location_on</mat-icon>
+        Địa chỉ: {{selectedRequest.contactAddress}}
+      </div>
+      <div class="information-item">
+        <mat-icon aria-hidden="false" class="information-item-icon">access_time</mat-icon>
+        Yêu cầu giúp đỡ: {{informationTime}}
+      </div>
+      <div class="information-item">
+        <mat-icon aria-hidden="false" class="information-item-icon">alt_route</mat-icon>
+        Hướng dẫn đường đi: {{selectedRequest.instructionDetail}}
+      </div>
+      <div class="information-item">
+        <mat-icon aria-hidden="false" class="information-item-icon">people_alt</mat-icon>
+        Số người cần giúp đỡ: {{selectedRequest.personNumber}}
+      </div>
+      <div class="information-item">
+        <mat-icon aria-hidden="false" class="information-item-icon">info</mat-icon>
+        Thông tin thêm: {{selectedRequest.additionInfo}}
+      </div>
 
-  <div class="volunteers">
-    <div class="volunteers-title-contain">
-      <div class="volunteers-title">Tình nguyện viên</div>
-      <div class="volunteer-area">
+      <div class="information-confirm" *ngIf="isShowConfirmButton">
         <div class="tags">
-          <mat-icon aria-hidden="false" class="volunteer-area-icon">sort</mat-icon>
-          10km
+          <mat-icon aria-hidden="false" class="information-confirm-icon">feedback</mat-icon>
+          <span class="information-confirm-text">
+            Xác thực
+          </span>
         </div>
       </div>
     </div>
 
-    <div class="volunteers-filters">
-      <div class="volunteers-filters-item tags">
-        Tất cả
+    <div class="volunteers">
+      <div class="volunteers-title-contain">
+        <div class="volunteers-title">Tình nguyện viên trong bán kính</div>
+        <div class="volunteer-area">
+          <div class="tags">
+            <mat-icon aria-hidden="false" class="volunteer-area-icon">sort</mat-icon>
+            10km
+          </div>
+        </div>
       </div>
-      <div class="volunteers-filters-item tags" *ngFor="let tag of allTags">
-        {{tag.tagValue}}
+
+      <div class="volunteers-filters">
+        <div class="volunteers-filters-item tags">
+          Tất cả
+        </div>
+        <div class="volunteers-filters-item tags" *ngFor="let tag of allTags">
+          {{tag.tagValue}}
+        </div>
+      </div>
+
+      <div class="volunteers-list">
+        <div class="volunteers-item">
+          <div class="volunteers-item-title">
+            <div class="volunteers-item-icon">
+              <div class="volunteers-item-icon-signal">
+                <span class="volunteers-item-icon-signal-text">M</span>
+              </div>
+            </div>
+            <div class="volunteers-item-info">
+              <div class="volunteers-item-name">Chú 7</div>
+              <div class="volunteers-item-phone">0922888111</div>
+            </div>
+          </div>
+          <div class="volunteers-item-service">
+            Dịch vụ: Thuốc men, thực phẩm
+          </div>
+          <div class="volunteers-item-description">
+            Cung cấp thuốc & thực phẩm
+          </div>
+        </div>
+
+        <div class="volunteers-item">
+          <div class="volunteers-item-title">
+            <div class="volunteers-item-icon">
+              <div class="volunteers-item-icon-signal">
+                <span class="volunteers-item-icon-signal-text">M</span>
+              </div>
+            </div>
+            <div class="volunteers-item-info">
+              <div class="volunteers-item-name">Chú 8</div>
+              <div class="volunteers-item-phone">0922888111</div>
+            </div>
+          </div>
+          <div class="volunteers-item-service">
+            Dịch vụ: Thuốc men, thực phẩm
+          </div>
+          <div class="volunteers-item-description">
+            Cung cấp thuốc & thực phẩm
+          </div>
+        </div>
+
+        <div class="volunteers-item">
+          <div class="volunteers-item-title">
+            <div class="volunteers-item-icon">
+              <div class="volunteers-item-icon-signal">
+                <span class="volunteers-item-icon-signal-text">M</span>
+              </div>
+            </div>
+            <div class="volunteers-item-info">
+              <div class="volunteers-item-name">Chú 9</div>
+              <div class="volunteers-item-phone">0922888111</div>
+            </div>
+          </div>
+          <div class="volunteers-item-service">
+            Dịch vụ: Thuốc men, thực phẩm
+          </div>
+          <div class="volunteers-item-description">
+            Cung cấp thuốc & thực phẩm
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="volunteers-list">
-      <div class="volunteers-item">
-        <div class="volunteers-item-title">
-          <div class="volunteers-item-icon">
-            <div class="volunteers-item-icon-signal">
-              <span class="volunteers-item-icon-signal-text">M</span>
-            </div>
-          </div>
-          <div class="volunteers-item-info">
-            <div class="volunteers-item-name">Chú 7</div>
-            <div class="volunteers-item-phone">0922888111</div>
-          </div>
-        </div>
-        <div class="volunteers-item-service">
-          Dịch vụ: Thuốc men, thực phẩm
-        </div>
-        <div class="volunteers-item-description">
-          Cung cấp thuốc & thực phẩm
-        </div>
-      </div>
-
-      <div class="volunteers-item">
-        <div class="volunteers-item-title">
-          <div class="volunteers-item-icon">
-            <div class="volunteers-item-icon-signal">
-              <span class="volunteers-item-icon-signal-text">M</span>
-            </div>
-          </div>
-          <div class="volunteers-item-info">
-            <div class="volunteers-item-name">Chú 8</div>
-            <div class="volunteers-item-phone">0922888111</div>
-          </div>
-        </div>
-        <div class="volunteers-item-service">
-          Dịch vụ: Thuốc men, thực phẩm
-        </div>
-        <div class="volunteers-item-description">
-          Cung cấp thuốc & thực phẩm
-        </div>
-      </div>
-
-      <div class="volunteers-item">
-        <div class="volunteers-item-title">
-          <div class="volunteers-item-icon">
-            <div class="volunteers-item-icon-signal">
-              <span class="volunteers-item-icon-signal-text">M</span>
-            </div>
-          </div>
-          <div class="volunteers-item-info">
-            <div class="volunteers-item-name">Chú 9</div>
-            <div class="volunteers-item-phone">0922888111</div>
-          </div>
-        </div>
-        <div class="volunteers-item-service">
-          Dịch vụ: Thuốc men, thực phẩm
-        </div>
-        <div class="volunteers-item-description">
-          Cung cấp thuốc & thực phẩm
-        </div>
-      </div>
-    </div>
-  </div>
+  </cdk-virtual-scroll-viewport>
 </div>

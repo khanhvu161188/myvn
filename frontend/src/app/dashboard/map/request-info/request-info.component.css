@@ -1,6 +1,6 @@
 .panel-container {
   position: fixed;
-  width: 360px;
+  width: 400px;
   height: 100vh;
   background: #fff;
   top: 0;
@@ -8,6 +8,11 @@
   box-shadow: 1px 0px 6px #aaa;
   border-right: 1px solid #aaa;
 }
+
+.panel-scroll {
+  height: calc(100vh - 200px);
+}
+
 .collapse-panel {
   position: absolute;
   right: -24px;
@@ -26,41 +31,39 @@
 
 .title {
   margin: 0;
-  margin-bottom: 24px;
   padding: 8px 16px;
 }
 
 .subtitle {
   font-size: 14px;
-  color: #a8a8a8;
   font-weight: normal;
 }
-.subtitle.low {
+.subtitle .low {
   color: #a8a8a8;
 }
-.subtitle.medium {
+.subtitle .medium {
   color: #6fbc6d;
 }
-.subtitle.high {
+.subtitle .high {
   color: #0019ff;
 }
-.subtitle.critical {
+.subtitle .critical {
   color: #ff0000;
 }
 
-.subtitle.new {
+.subtitle .new {
   color: #a8a8a8;
 }
-.subtitle.verified {
+.subtitle .verified {
   color: #6fbc6d;
 }
-.subtitle.processing {
+.subtitle .processing {
   color: #ffae00;
 }
-.subtitle.finished {
+.subtitle .finished {
   color: #0019ff;
 }
-.subtitle.reopened {
+.subtitle .reopened {
   color: #ff0000;
 }
 
@@ -68,8 +71,6 @@
   padding: 16px;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
-  margin-bottom: 8px;
-  display: flex;
   position: relative;
   min-height: 20px;
 }
@@ -77,18 +78,19 @@
 .category-item {
   margin-right: 10px;
   position: relative;
-  padding-left: 20px;
+  display: inline-block;
+  margin-bottom: 8px;
 }
 .category-item-checked-icon {
   position: absolute;
-  top: 0px;
-  left: 0;
+  top: 6px;
+  left: 6px;
   font-size: 18px;
   color: #6FBC6D;
 }
 
 .information {
-  padding: 8px 16px;
+  padding: 16px 16px 0;
   border-bottom: 1px solid #ddd;
 }
 
@@ -96,6 +98,7 @@
   margin-bottom: 16px;
   position: relative;
   padding-left: 32px;
+  word-break: break-all;
 }
 
 .information-item-icon {
@@ -117,7 +120,7 @@
 }
 .information-confirm-icon {
   position: absolute;
-  top: 6px;
+  top: 7px;
   left: 6px;
   font-size: 18px;
   color: #6FBC6D;

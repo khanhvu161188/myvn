@@ -1,7 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { parseTimeToLocalFromNow } from 'src/app/helpers/time.helpers';
 import { EmeRequestService, ITag } from '../../services/eme-request-service';
-import { MarkerData, MarkerDataStatus, MarkerDataRequestStatus } from '../../services/map-service';
+import { MarkerDataStatus, MarkerDataRequestStatus, MarkerDetailData } from '../../services/map-service';
 
 @Component({
   selector: 'app-map-request-info',
@@ -10,14 +11,15 @@ import { MarkerData, MarkerDataStatus, MarkerDataRequestStatus } from '../../ser
 })
 export class RequestInfoComponent implements OnInit {
   @Input() isShowPanel = false;
-  @Input() selectedRequest: MarkerData | null = null;
+  @Input() selectedRequest: MarkerDetailData | null = null;
   @Output() hidePanelEvent = new EventEmitter();
   allTags: ITag[] = [];
-  selectedTags: ITag[] = [];
   priorityText = "";
   priorityClass = "";
   requestStatusText = "";
   requestStatusClass = "";
+  isShowConfirmButton = false;
+  informationTime = "";
 
   constructor(private emeRequestService: EmeRequestService) { }
 
@@ -40,7 +42,8 @@ export class RequestInfoComponent implements OnInit {
       this.requestStatusText = this.getRequestStatusText(this.selectedRequest.requestStatus);
       this.requestStatusClass = this.getRequestStatusClass(this.selectedRequest.requestStatus);
 
-      this.selectedTags = this.allTags.filter(t => this.selectedRequest.tags.includes(t.id));
+      this.isShowConfirmButton = this.selectedRequest.requestStatus === MarkerDataRequestStatus.New;
+      this.informationTime = parseTimeToLocalFromNow(this.selectedRequest.createdDateTimeUtc);
     }
   }
 
