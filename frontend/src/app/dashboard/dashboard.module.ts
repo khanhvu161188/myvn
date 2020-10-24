@@ -29,6 +29,7 @@ import { EmeRequestService } from './services/eme-request-service';
 import { AddRequestTagsComponent } from './add-request-tags/add-request-tags.component';
 import { RequestInfoComponent } from './map/request-info/request-info.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatChipsModule,
     MatAutocompleteModule,
     MatIconModule,
-    ScrollingModule
+    ScrollingModule,
+    MatMenuModule
   ],
   declarations: [
     DashboardComponent,

@@ -3,7 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { GeoLocationService } from 'src/app/services/GeoLocation.service';
 import { AddRequestDialogComponent } from '../add-request-dialog/add-request-dialog.component';
-import { ISearchMarkerRequest, MapService, MarkerData, MarkerDetailData } from '../services/map-service';
+import {
+  ISearchMarkerRequest,
+  MapService,
+  MarkerData,
+  MarkerDetailData,
+  SearchVolunteersRequest,
+  SearchVolunteersData
+} from '../services/map-service';
 
 @Component({
   selector: 'app-map',
@@ -23,6 +30,7 @@ export class MapComponent implements OnInit {
   isShowContextMenu = false;
   isShowPanel = false;
   selectedRequest: MarkerDetailData | null = null;
+  volunteers: SearchVolunteersData[] = [];
 
   constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone, public dialog: MatDialog) {
   }
@@ -129,12 +137,36 @@ export class MapComponent implements OnInit {
     this.mapService.getMarkerDetail(marker.id).subscribe(
       (res) => {
         this.selectedRequest = res;
+
+        // search volunteers by marker
+        const searchVolunteersRequest: SearchVolunteersRequest = {
+          distance: 10,
+          startLat: res.lat,
+          startLon: res.lon,
+          status: [],
+          tagIds: []
+        };
+        this.searchVolunteers(searchVolunteersRequest);
       },
       err => {
         console.error(err)
       },
       () => {
         console.log('done loading marker detail');
+      }
+    );
+  }
+
+  public searchVolunteers(searchVolunteersRequest: SearchVolunteersRequest) {
+    this.mapService.searchVolunteers(searchVolunteersRequest).subscribe(
+      (resVolunteers) => {
+        this.volunteers = resVolunteers.data;
+      },
+      errVolunteers => {
+        console.log("Search volunteers failed: ", errVolunteers);
+      },
+      () => {
+        console.log('done loading volunteers');
       }
     );
   }

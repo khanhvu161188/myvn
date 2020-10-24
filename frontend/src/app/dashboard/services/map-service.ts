@@ -58,6 +58,38 @@ export interface ISearchMarkerRequest {
   topRightLat: number;
   topRightLon: number;
 }
+
+export interface SearchVolunteersRequest {
+  startLat: number;
+  startLon: number;
+  distance: number;
+  tagIds: string[];
+  status: number[];
+}
+
+export interface SearchVolunteersData {
+  id: string;
+  lat: number;
+  lon: number;
+  status: VolunteersStatus;
+  tags: string[];
+  distance: number;
+  phone: string;
+  name: string;
+}
+
+export interface SearchVolunteersResponse {
+  data: SearchVolunteersData[];
+}
+
+
+export enum VolunteersStatus {
+  Available = 10,
+  InProgress = 20,
+  NotAvailable = 30,
+  Mia = 999
+}
+
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
 };
@@ -87,5 +119,9 @@ export class MapService {
         }
       )
     );
+  }
+
+  searchVolunteers(request: SearchVolunteersRequest) {
+    return this.http.post<SearchVolunteersResponse>(`${this.apiUrl}/pod/v1/volunteer/search`, request);
   }
 }
