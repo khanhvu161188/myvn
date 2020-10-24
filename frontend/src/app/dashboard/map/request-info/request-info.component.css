@@ -198,6 +198,8 @@
 
 .volunteers-item {
   margin-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 16px;
 }
 
 .volunteers-item-title {

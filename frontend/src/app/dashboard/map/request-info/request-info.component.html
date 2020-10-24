@@ -61,13 +61,13 @@
         <div class="volunteer-area">
           <div class="tags" [matMenuTriggerFor]="menu">
             <mat-icon aria-hidden="false" class="volunteer-area-icon">sort</mat-icon>
-            {{selectedDistance}}Km
+            {{selectedDistance}} km
           </div>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="onSelectDistance(10)">10Km</button>
-            <button mat-menu-item (click)="onSelectDistance(20)">20Km</button>
-            <button mat-menu-item (click)="onSelectDistance(50)">50Km</button>
-            <button mat-menu-item (click)="onSelectDistance(100)">100Km</button>
+            <button mat-menu-item (click)="onSelectDistance(10)">10 km</button>
+            <button mat-menu-item (click)="onSelectDistance(20)">20 km</button>
+            <button mat-menu-item (click)="onSelectDistance(50)">50 km</button>
+            <button mat-menu-item (click)="onSelectDistance(100)">100 km</button>
           </mat-menu>
         </div>
       </div>
@@ -101,10 +101,11 @@
             <div class="volunteers-item-info">
               <div class="volunteers-item-name">{{volunteer.name}}</div>
               <div class="volunteers-item-phone">{{volunteer.phone}}</div>
+              <div class="volunteers-item-phone">{{volunteer.distance.toFixed(2)}} km</div>
             </div>
           </div>
           <div class="volunteers-item-service">
-            Đáp ứng: <span [innerHtml]="showTagsOfVolunteersAsText(volunteer)"></span>
+            Có thể đáp ứng: <span [innerHtml]="showTagsOfVolunteersAsText(volunteer)"></span>
           </div>
           <!-- <div class="volunteers-item-description">
             Cung cấp thuốc & thực phẩm
