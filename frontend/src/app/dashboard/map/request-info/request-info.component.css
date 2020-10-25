@@ -197,9 +197,14 @@
 }
 
 .volunteers-item {
-  margin-bottom: 16px;
   border-bottom: 1px solid #ddd;
   padding-bottom: 16px;
+  padding-top: 16px;
+  cursor: pointer;
+}
+.volunteers-item:hover {
+  background: #a4eaa1;
+  color: #fff;
 }
 
 .volunteers-item-title {
@@ -228,6 +233,12 @@
 .volunteers-item-phone {
   color: #a8a8a8;
 }
+.volunteers-item:hover .volunteers-item-phone {
+  color: #fff;
+}
 .volunteers-item-service {
   color: #a8a8a8;
+}
+.volunteers-item:hover .volunteers-item-service {
+  color: #fff;
 }

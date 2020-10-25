@@ -31,6 +31,7 @@ export class MapComponent implements OnInit {
   isShowPanel = false;
   selectedRequest: MarkerDetailData | null = null;
   volunteers: SearchVolunteersData[] = [];
+  currentMap: google.maps.Map = null;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone, public dialog: MatDialog) {
   }
@@ -39,6 +40,7 @@ export class MapComponent implements OnInit {
     this.getCurrentLocation();
   }
   public mapReady(map: google.maps.Map) {
+    this.currentMap = map;
 
     map.addListener("rightclick", (e) => {
       this._ngZone.run(() => {
@@ -63,21 +65,26 @@ export class MapComponent implements OnInit {
     if (this.searchRq) {
       this.searchRq.unsubscribe();
     }
-    this.searchRq = this.mapService.searchMarkers(this.request).subscribe(
-      (res) => {
-        // this.isSearch = true;
-        const news = res.data.filter((data) => this.markers.findIndex(old => old.id === data.id) === -1);
-        this.markers = [...this.markers, ...news];
-      },
-      err => {
-        this.markers = [];
-        console.error(err)
-      },
-      () => {
+    if (this.selectedRequest) {
+      const newMarkers = this.markers.filter(m => m.id === this.selectedRequest.id);
+      this.markers = [...newMarkers];
+    } else {
+      this.searchRq = this.mapService.searchMarkers(this.request).subscribe(
+        (res) => {
+          // this.isSearch = true;
+          const news = res.data.filter((data) => this.markers.findIndex(old => old.id === data.id) === -1);
+          this.markers = [...this.markers, ...news];
+        },
+        err => {
+          this.markers = [];
+          console.error(err)
+        },
+        () => {
 
-        console.log('done loading markers');
-      }
-    );
+          console.log('done loading markers');
+        }
+      );
+    }
   }
 
   public boundsChange(bound: google.maps.LatLngBounds) {
@@ -117,7 +124,7 @@ export class MapComponent implements OnInit {
       width: '500px',
       data: {
         lat: this.ctxLat,
-        lon: this.ctxLng 
+        lon: this.ctxLng
       }
     });
 
@@ -131,12 +138,18 @@ export class MapComponent implements OnInit {
     this.showRequestInfoPanel(marker);
   }
 
+  public clickedVolunteer(volunteer: SearchVolunteersData) {
+    this.currentMap.setCenter({ lat: volunteer.lat, lng: volunteer.lon });
+  }
+
   showRequestInfoPanel(marker: MarkerData) {
+    this.currentMap.setCenter({ lat: marker.lat, lng: marker.lon });
     this.isShowPanel = true;
 
     this.mapService.getMarkerDetail(marker.id).subscribe(
       (res) => {
         this.selectedRequest = res;
+        this.mapIdle();
 
         // search volunteers by marker
         const searchVolunteersRequest: SearchVolunteersRequest = {
@@ -174,5 +187,7 @@ export class MapComponent implements OnInit {
   public hideRequestInfoPanel() {
     this.isShowPanel = false;
     this.selectedRequest = null;
+    this.volunteers = [];
+    this.mapIdle();
   }
 }
