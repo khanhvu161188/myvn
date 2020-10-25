@@ -34,7 +34,13 @@ spec:
             - name: GOOGLE_MAP_API_KEY
               value: {{default "1" .Values.env.GOOGLE_MAP_API_KEY }} 
             - name: API_URL
-              value: {{default "https://stagingapi.thamhoa.vn" .Values.env.API_URL }} 
+              value: {{default "https://stagingapi.thamhoa.vn" .Values.env.API_URL }}               
+            - name: siteDomain
+              value: {{default "https://staging.thamhoa.vn" .Values.env.siteDomain }}               
+            - name: stsAuthority
+              value: {{default "https://stagingid.thamhoa.vn/" .Values.env.stsAuthority }}               
+            - name: clientId
+              value: {{default "portal_staging" .Values.env.clientId }} 
           #livenessProbe:
           #  httpGet:
           #    path: /
