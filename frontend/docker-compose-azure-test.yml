@@ -1,7 +1,7 @@
 version: "3.4"
 services:
     myvn-frontend:
-      image: registry.innov8.team/crisis-vn/frontend:#{System.PullRequest.PullRequestNumber}#    
+      image: registry.innov8.team/crisis-vn/frontend:qc-#{System.PullRequest.PullRequestNumber}#    
       build:
         context: .
         dockerfile: ./Dockerfile-Production 
