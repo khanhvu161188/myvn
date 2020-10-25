@@ -1,3 +1,5 @@
 <app-map *ngIf="isBrowser">
 </app-map>
-
+<button (click)='onLogin()' *ngIf="!user">Login</button>
+<span *ngIf="user" [innerText]="user.profile.firstname + ' ' + user.profile.lastname"></span>
+<button (click)='onLogout()' *ngIf="user">Logout</button>
