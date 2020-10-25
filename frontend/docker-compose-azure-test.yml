@@ -1,0 +1,10 @@
+version: "3.4"
+services:
+    myvn-frontend:
+      image: registry.innov8.team/crisis-vn/frontend:qc-#{System.PullRequest.PullRequestNumber}#    
+      build:
+        context: .
+        dockerfile: ./Dockerfile-Production 
+      ports:
+        - 4000:4000
+      tty: true
