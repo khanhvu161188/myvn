@@ -1,7 +1,12 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { parseTimeToLocalFromNow } from 'src/app/helpers/time.helpers';
 import { EmeRequestService, ITag } from '../../services/eme-request-service';
-import { MarkerData, MarkerDataStatus, MarkerDataRequestStatus } from '../../services/map-service';
+import { MarkerDataStatus, MarkerDataRequestStatus, MarkerDetailData, SearchVolunteersData, SearchVolunteersRequest } from '../../services/map-service';
+
+interface IVolunteerData extends SearchVolunteersData {
+  tagDatas: ITag[];
+}
 
 @Component({
   selector: 'app-map-request-info',
@@ -10,14 +15,22 @@ import { MarkerData, MarkerDataStatus, MarkerDataRequestStatus } from '../../ser
 })
 export class RequestInfoComponent implements OnInit {
   @Input() isShowPanel = false;
-  @Input() selectedRequest: MarkerData | null = null;
+  @Input() selectedRequest: MarkerDetailData | null = null;
+  @Input() volunteers: SearchVolunteersData[] = [];
   @Output() hidePanelEvent = new EventEmitter();
+  @Output() searchVolunteersEvent = new EventEmitter();
+  @Output() selectedVolunteerEvent = new EventEmitter();
   allTags: ITag[] = [];
-  selectedTags: ITag[] = [];
   priorityText = "";
   priorityClass = "";
   requestStatusText = "";
   requestStatusClass = "";
+  isShowConfirmButton = false;
+  informationTime = "";
+  localVolunteers: IVolunteerData[] = [];
+  selectedTagId: string[] = [];
+  isSelectedAllTags = false;
+  selectedDistance = 10;
 
   constructor(private emeRequestService: EmeRequestService) { }
 
@@ -33,15 +46,22 @@ export class RequestInfoComponent implements OnInit {
 
   ngOnChanges() {
     if (this.selectedRequest) {
-      console.log("this.selectedRequest: ", this.selectedRequest);
       this.priorityText = this.getPriorityText(this.selectedRequest.crisisStatus);
       this.priorityClass = this.getPriorityClass(this.selectedRequest.crisisStatus);
 
       this.requestStatusText = this.getRequestStatusText(this.selectedRequest.requestStatus);
       this.requestStatusClass = this.getRequestStatusClass(this.selectedRequest.requestStatus);
 
-      this.selectedTags = this.allTags.filter(t => this.selectedRequest.tags.includes(t.id));
+      this.isShowConfirmButton = this.selectedRequest.requestStatus === MarkerDataRequestStatus.New;
+      this.informationTime = parseTimeToLocalFromNow(this.selectedRequest.createdDateTimeUtc);
     }
+
+    this.localVolunteers = this.volunteers.map(v => {
+      return {
+        ...v,
+        tagDatas: this.allTags.filter(t => v.tags.includes(t.id))
+      };
+    });
   }
 
   getPriorityText(status: MarkerDataStatus) {
@@ -102,5 +122,72 @@ export class RequestInfoComponent implements OnInit {
 
   public hidePanel() {
     this.hidePanelEvent.emit();
+  }
+
+  public showTagsOfVolunteersAsText(volunteer: IVolunteerData) {
+    return volunteer.tagDatas.map(v => v.tagValue).join(", ");
+  }
+
+  public onSelectAllTagOfVolunteers() {
+    if (!this.isSelectedAllTags) {
+      this.isSelectedAllTags = true;
+      this.selectedTagId = this.allTags.map(t => t.id);
+    } else {
+      this.isSelectedAllTags = false;
+      this.selectedTagId = [];
+    }
+
+    const searchVolunteersRequest: SearchVolunteersRequest = {
+      distance: this.selectedDistance,
+      startLat: this.selectedRequest.lat,
+      startLon: this.selectedRequest.lon,
+      status: [],
+      tagIds: this.isSelectedAllTags || this.selectedTagId.length === 0
+      ? [] : this.selectedTagId
+    };
+    this.searchVolunteersEvent.emit(searchVolunteersRequest);
+  }
+
+  public onFilterTagsOfVolunteers(tagId: string) {
+    if (this.selectedTagId.includes(tagId)) {
+      const tagIdIndex = this.selectedTagId.indexOf(tagId);
+      this.selectedTagId.splice(tagIdIndex, 1);
+    } else {
+      this.selectedTagId.push(tagId);
+    }
+
+    if (this.selectedTagId.length === this.allTags.length) {
+      this.isSelectedAllTags = true;
+    } else {
+      this.isSelectedAllTags = false;
+    }
+
+    const searchVolunteersRequest: SearchVolunteersRequest = {
+      distance: this.selectedDistance,
+      startLat: this.selectedRequest.lat,
+      startLon: this.selectedRequest.lon,
+      status: [],
+      tagIds: this.isSelectedAllTags || this.selectedTagId.length === 0
+      ? [] : this.selectedTagId
+    };
+    this.searchVolunteersEvent.emit(searchVolunteersRequest);
+  }
+
+  public onSelectDistance(distance: number) {
+    this.selectedDistance = distance;
+
+    const searchVolunteersRequest: SearchVolunteersRequest = {
+      distance: this.selectedDistance,
+      startLat: this.selectedRequest.lat,
+      startLon: this.selectedRequest.lon,
+      status: [],
+      tagIds: this.isSelectedAllTags || this.selectedTagId.length === 0
+      ? [] : this.selectedTagId
+    };
+    this.searchVolunteersEvent.emit(searchVolunteersRequest);
+  }
+
+  public onClickVolunteerItem(volunteer: IVolunteerData) {
+    this.selectedVolunteerEvent.emit(volunteer);
   }
 }

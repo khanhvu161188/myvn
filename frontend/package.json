@@ -13,7 +13,8 @@
     "dev:ssr": "ng run myvn:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
     "build:ssr": "ng build --prod && ng run myvn:server:production",
-    "prerender": "ng run myvn:prerender"
+    "prerender": "ng run myvn:prerender",
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +37,7 @@
     "angular-in-memory-web-api": "~0.11.0",
     "express": "^4.15.2",
     "oidc-client": "^1.10.1",
+    "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
