@@ -19,6 +19,7 @@ export class RequestInfoComponent implements OnInit {
   @Input() volunteers: SearchVolunteersData[] = [];
   @Output() hidePanelEvent = new EventEmitter();
   @Output() searchVolunteersEvent = new EventEmitter();
+  @Output() selectedVolunteerEvent = new EventEmitter();
   allTags: ITag[] = [];
   priorityText = "";
   priorityClass = "";
@@ -184,5 +185,9 @@ export class RequestInfoComponent implements OnInit {
       ? [] : this.selectedTagId
     };
     this.searchVolunteersEvent.emit(searchVolunteersRequest);
+  }
+
+  public onClickVolunteerItem(volunteer: IVolunteerData) {
+    this.selectedVolunteerEvent.emit(volunteer);
   }
 }

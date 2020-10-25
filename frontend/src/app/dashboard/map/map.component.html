@@ -1,6 +1,6 @@
 
 <div class="root">
-  <agm-map [latitude]="lat" [longitude]="lng" (boundsChange)="boundsChange($event)" (idle)="mapIdle()" (mapReady)="mapReady($event)">
+  <agm-map [latitude]="lat" [longitude]="lng" (boundsChange)="boundsChange($event)" (idle)="mapIdle()" (mapReady)="mapReady($event)" (mapClick)="hideRequestInfoPanel()">
     <agm-marker-cluster imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m">
       <agm-marker *ngFor="let marker of markers"
       [latitude]="marker.lat"
@@ -8,6 +8,11 @@
       (markerClick)="clickedMarker(marker)"
     ></agm-marker>
     </agm-marker-cluster>
+    <agm-marker *ngFor="let marker of volunteers"
+      [latitude]="marker.lat"
+      [longitude]="marker.lon"
+      label="V"
+    ></agm-marker>
   </agm-map>
   <app-context-menu *ngIf="isShowContextMenu" [x]="x" [y]="y" [lat]="ctxLat" [lng]="ctxLng" (onAddMissingPlace)="onAddMissingPlace($event)" ></app-context-menu>
   <app-map-request-info
@@ -16,6 +21,7 @@
     (hidePanelEvent)="hideRequestInfoPanel()"
     [volunteers]="volunteers"
     (searchVolunteersEvent)="searchVolunteers($event)"
+    (selectedVolunteerEvent)="clickedVolunteer($event)"
   >
 </app-map-request-info>
 </div>

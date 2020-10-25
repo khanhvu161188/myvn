@@ -91,7 +91,7 @@
       </div>
 
       <div class="volunteers-list">
-        <div class="volunteers-item" *ngFor="let volunteer of localVolunteers">
+        <div class="volunteers-item" *ngFor="let volunteer of localVolunteers" (click)="onClickVolunteerItem(volunteer)">
           <div class="volunteers-item-title">
             <div class="volunteers-item-icon">
               <div class="volunteers-item-icon-signal">
