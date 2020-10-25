@@ -29,26 +29,27 @@ export class AuthService {
 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private http: HttpClient, private envService: EnvBrowserService) {
     this.apiUrl = envService.get(MY_API_URL);
-    this.siteDomain = window.location.protocol + '//' + window.location.host;
-
-    const settings = {
-      authority: environment.stsAuthority,
-      client_id: environment.clientId,
-      // redirect_uri: this.siteDomain + environment.redirect_uri,
-      silent_redirect_uri: this.siteDomain + environment.silent_redirect_uri,
-      // post_logout_redirect_uri: environment.apiUrl,
-      response_type: environment.response_type,
-      scope: environment.scope,
-      popup_redirect_uri: this.siteDomain + environment.popup_redirect_uri,
-      popup_post_logout_redirect_uri: this.siteDomain + environment.popup_post_logout_redirect_uri,
-      automaticSilentRenew: environment.automaticSilentRenew,
-      validateSubOnSilentRenew: environment.validateSubOnSilentRenew,
-      monitorAnonymousSession: environment.monitorAnonymousSession,
-      filterProtocolClaims: environment.filterProtocolClaims,
-      loadUserInfo: environment.loadUserInfo,
-      revokeAccessTokenOnSignout: environment.revokeAccessTokenOnSignout,
-    };
     if (this.isBrowser) {
+      this.siteDomain = window.location.protocol + '//' + window.location.host;
+
+      const settings = {
+        authority: environment.stsAuthority,
+        client_id: environment.clientId,
+        // redirect_uri: this.siteDomain + environment.redirect_uri,
+        silent_redirect_uri: this.siteDomain + environment.silent_redirect_uri,
+        // post_logout_redirect_uri: environment.apiUrl,
+        response_type: environment.response_type,
+        scope: environment.scope,
+        popup_redirect_uri: this.siteDomain + environment.popup_redirect_uri,
+        popup_post_logout_redirect_uri: this.siteDomain + environment.popup_post_logout_redirect_uri,
+        automaticSilentRenew: environment.automaticSilentRenew,
+        validateSubOnSilentRenew: environment.validateSubOnSilentRenew,
+        monitorAnonymousSession: environment.monitorAnonymousSession,
+        filterProtocolClaims: environment.filterProtocolClaims,
+        loadUserInfo: environment.loadUserInfo,
+        revokeAccessTokenOnSignout: environment.revokeAccessTokenOnSignout,
+      };
+
       this.userManager = new UserManager(settings);
 
       this.userManager.events.addUserLoaded((user) => {
