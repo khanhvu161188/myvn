@@ -98,15 +98,19 @@ export class AuthService {
       this.getUser()
         .then(user => {
           this.user = user;
-          // if (user) {
-          //   console.log('authenticated user', user);
-          //   console.log('authenticated user token', user.access_token);
-          //   // this.http.get<any>(this.apiUrl + '/pod/v1/misc/auth').subscribe((info) => {
-          //   //   console.log('user info', info);
-          //   // }, error => {
-          //   //   console.error('Bind user failed!', error);
-          //   // });
-          // }
+          if (user) {
+            console.log('authenticated user', user);
+            console.log('authenticated user token', user.access_token);
+            this.http.get<any>(this.apiUrl + '/pod/v1/misc/auth', {
+              headers: {
+                Authorization: 'Bearer ' + user.access_token
+              }
+            }).subscribe((info) => {
+              console.log('user info', info);
+            }, error => {
+              console.error('Bind user failed!', error);
+            });
+          }
         });
     }
   }
