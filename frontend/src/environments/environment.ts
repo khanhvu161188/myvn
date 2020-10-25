@@ -7,7 +7,6 @@ export const environment = {
   port: 4200,
   googleMapApiKey: 'AIzaSyACOLjTUMYHC2v02KnVKBEbX1-1oo4oTS0',
   apiUrl: 'https://stagingapi.thamhoa.vn',
-  siteDomain: 'http://localhost:4200',
 
   // sso configurations
   stsAuthority: 'https://stagingid.thamhoa.vn/',
