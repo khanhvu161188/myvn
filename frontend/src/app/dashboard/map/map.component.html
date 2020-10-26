@@ -1,6 +1,7 @@
 <div class="root">
   <agm-map [latitude]="lat" [longitude]="lng" (boundsChange)="boundsChange($event)" (idle)="mapIdle()"
-           (mapReady)="mapReady($event)" (mapClick)="onMapClick()"
+           (mapReady)="mapReady($event)"
+           (mapClick)="onMapClick($event)"
            [ngClass]="{'has-selected': !!selectedRequest}">
     <agm-marker-cluster
       imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
@@ -23,7 +24,7 @@
     <app-context-menu *ngIf="isShowContextMenu" [x]="x" [y]="y" [lat]="ctxLat" [lng]="ctxLng" (onAddMissingPlace)="onAddMissingPlace($event)" ></app-context-menu>
     <app-map-request-info
       [isShowPanel]="isShowPanel"
-      [selectedRequest]="selectedRequest"
+      [selectedRequest]="requestData"
       (hidePanelEvent)="onHidePanel()"
       [volunteers]="volunteers"
       (searchVolunteersEvent)="searchVolunteers($event)"

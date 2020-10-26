@@ -3,7 +3,14 @@ import {MatDialog} from '@angular/material/dialog';
 import {Subscription} from 'rxjs';
 import {GeoLocationService} from 'src/app/services/GeoLocation.service';
 import {AddRequestDialogComponent} from '../add-request-dialog/add-request-dialog.component';
-import {ISearchMarkerRequest, MapService, MarkerData, SearchVolunteersData, SearchVolunteersRequest} from '../services/map-service';
+import {
+  ISearchMarkerRequest,
+  MapService,
+  MarkerData,
+  MarkerDetailData,
+  SearchVolunteersData,
+  SearchVolunteersRequest
+} from '../services/map-service';
 
 @Component({
   selector: 'app-map',
@@ -24,6 +31,7 @@ export class MapComponent implements OnInit {
   isShowContextMenu = false;
   isShowPanel = false;
   selectedRequest: MarkerData | null = null;
+  requestData: MarkerDetailData | null = null;
   volunteers: SearchVolunteersData[] = [];
   currentMap: google.maps.Map = null;
 
@@ -39,7 +47,7 @@ export class MapComponent implements OnInit {
 
     map.addListener('rightclick', (e) => {
       this._ngZone.run(() => {
-        this.mapRightClick(e);
+        this.onRightClick(e);
       });
     });
   }
@@ -85,7 +93,7 @@ export class MapComponent implements OnInit {
     this.hideContextMenu();
   }
 
-  public mapRightClick(event: google.maps.MouseEvent) {
+  public onRightClick(event) {
     console.log((event as any).pixel);
     // alert(`right click to ${event.latLng.lat()}/${event.latLng.lng()}`);
     this.x = (event as any).pixel.x + 20;
@@ -117,6 +125,7 @@ export class MapComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.mapIdle()
     });
   }
 
@@ -155,7 +164,7 @@ export class MapComponent implements OnInit {
 
     this.mapService.getMarkerDetail(this.selectedRequest.id).subscribe(
       (res) => {
-        // this.selectedRequest = res;
+        this.requestData = res;
         // this.mapIdle();
 
         // search volunteers by marker
@@ -191,7 +200,7 @@ export class MapComponent implements OnInit {
     );
   }
 
-  public onMapClick() {
+  public onMapClick(e: google.maps.MouseEvent) {
     this.hideContextMenu();
 
     if (this.selectedRequest) {
@@ -202,6 +211,7 @@ export class MapComponent implements OnInit {
   public onHidePanel() {
     this.unHideRequestMarkers();
     this.selectedRequest = null;
+    this.requestData = null;
     this.volunteers = [];
     this.isShowPanel = false;
     this.mapIdle();
