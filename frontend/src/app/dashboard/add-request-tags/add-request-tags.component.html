@@ -5,7 +5,7 @@
             {{fruit}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
-        <input placeholder="Add Tag..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
+        <input placeholder="Thêm mục cần giúp đỡ..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
             [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             (matChipInputTokenEnd)="add($event)">
     </mat-chip-list>

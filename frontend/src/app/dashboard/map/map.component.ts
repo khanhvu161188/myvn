@@ -7,10 +7,16 @@ import {
   ISearchMarkerRequest,
   MapService,
   MarkerData,
+  MarkerDataStatus,
   MarkerDetailData,
   SearchVolunteersData,
   SearchVolunteersRequest
 } from '../services/map-service';
+import MarkerLowPath from "src/assets/icon-marker-low.png"
+import MarkerMediumPath from "src/assets/icon-marker-medium.png"
+import MarkerHighPath from "src/assets/icon-marker-high.png"
+import MarkerCriticalPath from "src/assets/icon-marker-critical.png"
+import MarkerVolunteersPath from "src/assets/icon-marker-volunteers.png"
 
 @Component({
   selector: 'app-map',
@@ -34,6 +40,7 @@ export class MapComponent implements OnInit {
   requestData: MarkerDetailData | null = null;
   volunteers: SearchVolunteersData[] = [];
   currentMap: google.maps.Map = null;
+  markerVolunteersPath = MarkerVolunteersPath
 
   constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone, public dialog: MatDialog) {
   }
@@ -215,5 +222,18 @@ export class MapComponent implements OnInit {
     this.volunteers = [];
     this.isShowPanel = false;
     this.mapIdle();
+  }
+
+  public getIconPathByCrisStatus(crisStatus: MarkerDataStatus) {
+    switch(crisStatus) {
+      case MarkerDataStatus.Low:
+        return MarkerLowPath;
+      case MarkerDataStatus.Medium:
+        return MarkerMediumPath;
+      case MarkerDataStatus.High:
+        return MarkerHighPath;
+      default:
+        return MarkerCriticalPath;
+    }
   }
 }
