@@ -12,14 +12,16 @@
                   (markerClick)="clickedMarker(marker)"
                   [ngClass]="{'crisis': true, 'selected': marker.visible}"
                   [visible]="marker.visible"
+                  [iconUrl]="getIconPathByCrisStatus(marker.crisisStatus)"
+      ></agm-marker>
+      <agm-marker *ngFor="let marker of volunteers"
+                  [latitude]="marker.lat"
+                  [longitude]="marker.lon"
+                  label="V"
+                  [ngClass]="{'volunteer': true}"
+                  [iconUrl]="markerVolunteersPath"
       ></agm-marker>
     </agm-marker-cluster>
-    <agm-marker *ngFor="let marker of volunteers"
-                [latitude]="marker.lat"
-                [longitude]="marker.lon"
-                label="V"
-                [ngClass]="{'volunteer': true}"
-    ></agm-marker>
   </agm-map>
     <app-context-menu *ngIf="isShowContextMenu" [x]="x" [y]="y" [lat]="ctxLat" [lng]="ctxLng" (onAddMissingPlace)="onAddMissingPlace($event)" ></app-context-menu>
     <app-map-request-info
