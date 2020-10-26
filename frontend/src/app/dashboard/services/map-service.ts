@@ -11,6 +11,7 @@ export interface MarkerData {
   crisisStatus: MarkerDataStatus;
   requestStatus: MarkerDataRequestStatus;
   tags: string[];
+  visible: boolean;
 }
 
 export interface GetMarkerDetailResponse {

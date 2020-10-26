@@ -1,27 +1,33 @@
-
 <div class="root">
-  <agm-map [latitude]="lat" [longitude]="lng" (boundsChange)="boundsChange($event)" (idle)="mapIdle()" (mapReady)="mapReady($event)" (mapClick)="hideRequestInfoPanel()">
-    <agm-marker-cluster imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m">
+  <agm-map [latitude]="lat" [longitude]="lng" (boundsChange)="boundsChange($event)" (idle)="mapIdle()"
+           (mapReady)="mapReady($event)" (mapClick)="onMapClick()"
+           [ngClass]="{'has-selected': !!selectedRequest}">
+    <agm-marker-cluster
+      imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
+      [ngClass]="{'cluster': true}">
       <agm-marker *ngFor="let marker of markers"
-      [latitude]="marker.lat"
-      [longitude]="marker.lon"
-      (markerClick)="clickedMarker(marker)"
-    ></agm-marker>
+                  [latitude]="marker.lat"
+                  [longitude]="marker.lon"
+                  (markerClick)="clickedMarker(marker)"
+                  [ngClass]="{'crisis': true, 'selected': marker.visible}"
+                  [visible]="marker.visible"
+      ></agm-marker>
     </agm-marker-cluster>
     <agm-marker *ngFor="let marker of volunteers"
-      [latitude]="marker.lat"
-      [longitude]="marker.lon"
-      label="V"
+                [latitude]="marker.lat"
+                [longitude]="marker.lon"
+                label="V"
+                [ngClass]="{'volunteer': true}"
     ></agm-marker>
   </agm-map>
-  <app-context-menu *ngIf="isShowContextMenu" [x]="x" [y]="y" [lat]="ctxLat" [lng]="ctxLng" (onAddMissingPlace)="onAddMissingPlace($event)" ></app-context-menu>
-  <app-map-request-info
-    [isShowPanel]="isShowPanel"
-    [selectedRequest]="selectedRequest"
-    (hidePanelEvent)="hideRequestInfoPanel()"
-    [volunteers]="volunteers"
-    (searchVolunteersEvent)="searchVolunteers($event)"
-    (selectedVolunteerEvent)="clickedVolunteer($event)"
-  >
-</app-map-request-info>
+    <app-context-menu *ngIf="isShowContextMenu" [x]="x" [y]="y" [lat]="ctxLat" [lng]="ctxLng" (onAddMissingPlace)="onAddMissingPlace($event)" ></app-context-menu>
+    <app-map-request-info
+      [isShowPanel]="isShowPanel"
+      [selectedRequest]="selectedRequest"
+      (hidePanelEvent)="onHidePanel()"
+      [volunteers]="volunteers"
+      (searchVolunteersEvent)="searchVolunteers($event)"
+      (selectedVolunteerEvent)="clickedVolunteer($event)"
+    >
+  </app-map-request-info>
 </div>

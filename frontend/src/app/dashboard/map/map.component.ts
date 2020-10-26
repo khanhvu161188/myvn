@@ -1,21 +1,15 @@
-import { Component, NgZone, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { GeoLocationService } from 'src/app/services/GeoLocation.service';
-import { AddRequestDialogComponent } from '../add-request-dialog/add-request-dialog.component';
-import {
-  ISearchMarkerRequest,
-  MapService,
-  MarkerData,
-  MarkerDetailData,
-  SearchVolunteersRequest,
-  SearchVolunteersData
-} from '../services/map-service';
+import {Component, NgZone, OnInit, ViewEncapsulation} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {Subscription} from 'rxjs';
+import {GeoLocationService} from 'src/app/services/GeoLocation.service';
+import {AddRequestDialogComponent} from '../add-request-dialog/add-request-dialog.component';
+import {ISearchMarkerRequest, MapService, MarkerData, SearchVolunteersData, SearchVolunteersRequest} from '../services/map-service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MapComponent implements OnInit {
   lat = 0;
@@ -29,7 +23,7 @@ export class MapComponent implements OnInit {
   ctxLng = 0;
   isShowContextMenu = false;
   isShowPanel = false;
-  selectedRequest: MarkerDetailData | null = null;
+  selectedRequest: MarkerData | null = null;
   volunteers: SearchVolunteersData[] = [];
   currentMap: google.maps.Map = null;
 
@@ -39,18 +33,14 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.getCurrentLocation();
   }
+
   public mapReady(map: google.maps.Map) {
     this.currentMap = map;
 
-    map.addListener("rightclick", (e) => {
+    map.addListener('rightclick', (e) => {
       this._ngZone.run(() => {
         this.mapRightClick(e);
-      })
-    });
-    map.addListener("click", (e) => {
-      this._ngZone.run(() => {
-        this.hideContextMenu();
-      })
+      });
     });
   }
 
@@ -58,17 +48,14 @@ export class MapComponent implements OnInit {
     this.geoService.getCurrentLocation().subscribe((position) => {
       this.lat = position.latitude;
       this.lng = position.longitude;
-    })
+    });
   }
 
   public mapIdle() {
     if (this.searchRq) {
       this.searchRq.unsubscribe();
     }
-    if (this.selectedRequest) {
-      const newMarkers = this.markers.filter(m => m.id === this.selectedRequest.id);
-      this.markers = [...newMarkers];
-    } else {
+    if (!this.selectedRequest) {
       this.searchRq = this.mapService.searchMarkers(this.request).subscribe(
         (res) => {
           // this.isSearch = true;
@@ -77,7 +64,7 @@ export class MapComponent implements OnInit {
         },
         err => {
           this.markers = [];
-          console.error(err)
+          console.error(err);
         },
         () => {
 
@@ -93,7 +80,7 @@ export class MapComponent implements OnInit {
       bottomLeftLon: bound.getSouthWest().lng(),
       topRightLat: bound.getNorthEast().lat(),
       topRightLon: bound.getNorthEast().lng()
-    }
+    };
 
     this.hideContextMenu();
   }
@@ -114,7 +101,7 @@ export class MapComponent implements OnInit {
     this.isShowContextMenu = false;
   }
 
-  public onAddMissingPlace({ lat, lng }: { lat: number, lng: number }) {
+  public onAddMissingPlace({lat, lng}: { lat: number, lng: number }) {
     this.hideContextMenu();
     this.openDialog();
   }
@@ -135,21 +122,41 @@ export class MapComponent implements OnInit {
 
 
   public clickedMarker(marker: MarkerData) {
-    this.showRequestInfoPanel(marker);
+    this.selectedRequest = marker;
+    this.hideRequestMarkersExcept();
+    this.showRequestInfoPanel();
+  }
+
+  public hideRequestMarkersExcept() {
+    this.markers.map(m => {
+      if (m.id !== this.selectedRequest.id) {
+        m.visible = false;
+      }
+      return m;
+    });
+  }
+
+  public unHideRequestMarkers() {
+    this.markers.map(m => {
+      m.visible = true;
+      return m;
+    });
   }
 
   public clickedVolunteer(volunteer: SearchVolunteersData) {
-    this.currentMap.setCenter({ lat: volunteer.lat, lng: volunteer.lon });
+    // panTo included animation
+    this.currentMap.panTo({lat: volunteer.lat, lng: volunteer.lon});
   }
 
-  showRequestInfoPanel(marker: MarkerData) {
-    this.currentMap.setCenter({ lat: marker.lat, lng: marker.lon });
+  showRequestInfoPanel() {
+    // panTo included animation
+    this.currentMap.panTo({lat: this.selectedRequest.lat, lng: this.selectedRequest.lon});
     this.isShowPanel = true;
 
-    this.mapService.getMarkerDetail(marker.id).subscribe(
+    this.mapService.getMarkerDetail(this.selectedRequest.id).subscribe(
       (res) => {
-        this.selectedRequest = res;
-        this.mapIdle();
+        // this.selectedRequest = res;
+        // this.mapIdle();
 
         // search volunteers by marker
         const searchVolunteersRequest: SearchVolunteersRequest = {
@@ -162,7 +169,7 @@ export class MapComponent implements OnInit {
         this.searchVolunteers(searchVolunteersRequest);
       },
       err => {
-        console.error(err)
+        console.error(err);
       },
       () => {
         console.log('done loading marker detail');
@@ -176,7 +183,7 @@ export class MapComponent implements OnInit {
         this.volunteers = resVolunteers.data;
       },
       errVolunteers => {
-        console.log("Search volunteers failed: ", errVolunteers);
+        console.log('Search volunteers failed: ', errVolunteers);
       },
       () => {
         console.log('done loading volunteers');
@@ -184,10 +191,19 @@ export class MapComponent implements OnInit {
     );
   }
 
-  public hideRequestInfoPanel() {
-    this.isShowPanel = false;
+  public onMapClick() {
+    this.hideContextMenu();
+
+    if (this.selectedRequest) {
+      this.onHidePanel();
+    }
+  }
+
+  public onHidePanel() {
+    this.unHideRequestMarkers();
     this.selectedRequest = null;
     this.volunteers = [];
+    this.isShowPanel = false;
     this.mapIdle();
   }
 }
