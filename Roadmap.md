@@ -7,4 +7,3 @@
 4. Phân tích mức độ tàn phá để xây dựng kế hoạch tái thiết bằng các nguồn tài trợ phi chính phủ.
 5. Thống kê các vị trí ngập lụt, sạt lỡ xây dựng mô hình trí tuệ nhân tạo trong tương lai nhằm mục đích dự đoán, quy hoạch tránh lặp lại thảm họa.
 
-!
