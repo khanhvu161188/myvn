@@ -33,7 +33,6 @@
     "@angular/router": "~10.1.3",
     "@google/markerclustererplus": "^5.1.3",
     "@nguniversal/express-engine": "~10.1.0",
-    "@nguniversal/module-map-ngfactory-loader": "^8.2.6",
     "angular-in-memory-web-api": "~0.11.0",
     "express": "^4.15.2",
     "oidc-client": "^1.10.1",

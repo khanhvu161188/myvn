@@ -124,4 +124,16 @@ export class MapService {
   searchVolunteers(request: SearchVolunteersRequest) {
     return this.http.post<SearchVolunteersResponse>(`${this.apiUrl}/pod/v1/volunteer/search`, request);
   }
+
+  test() {
+    this.http.get<any>(this.apiUrl + '/pod/v1/misc/auth', {
+      headers: {
+        Authorization: 'Bearer ' + "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQwQUQ5NTE4N0Y4NEFEN0QxNkQ5NjUyMUFBQ0Y5MzVCMjgxMjQ2MzYiLCJ0eXAiOiJhdCtqd3QiLCJ4NXQiOiJRSzJWR0gtRXJYMFcyV1VocXMtVFd5Z1NSalkifQ.eyJuYmYiOjE2MDM2MzYwNTEsImV4cCI6MTYwNjIyODA1MSwiaXNzIjoiaHR0cHM6Ly9zdGFnaW5naWQudGhhbWhvYS52biIsImF1ZCI6WyJwb2QiLCJyZWFsdGltZSJdLCJjbGllbnRfaWQiOiJwb3J0YWxfc3RhZ2luZyIsInN1YiI6IjE5ZjdhNGQ3LTViMDUtNGRjOC1hZDQwLTdhYzg4ZjhkZGQzMCIsImF1dGhfdGltZSI6MTYwMzYzMjk2OSwiaWRwIjoiRmFjZWJvb2siLCJlbWFpbCI6ImRhb21pbmhzYW5ndm5AZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxOWY3YTRkNy01YjA1LTRkYzgtYWQ0MC03YWM4OGY4ZGRkMzAiLCJmaXJzdG5hbWUiOiJTYW5nIiwibGFzdG5hbWUiOiJEYW8iLCJzY29wZSI6WyJwcm9maWxlIiwib3BlbmlkIiwicG9kX3dyaXRlIiwicG9kX3JlYWQiLCJyZWFsdGltZV93cml0ZSIsInJlYWx0aW1lX3JlYWQiXSwiYW1yIjpbImV4dGVybmFsIl19.G9WaTyRqLgn2iGlCzfarcfedUl_nT2fi13AKVdMMh6Fogtk1Kl-jUG85-KGN39MtgnaIP3dOZ-gOvs1ndm8ePybfmoR9eIUFCmDYyftxihF4TUnF_RQdSW6TJOeE9juLIVI_A9oO6cJlSOc6WkAhBQvFjgi3Bd3VLTcqn-pPSOKwX6JWowHl33Okvu8WArfHTGQsEBrfMX3_26Gm-Vo-jVavesvADVY9NseV5QQ5M0OkWqSKQTb5GT_1s10jRmhRDV_0ugfB4HYQQdi9mgTWUZJshdoIoo-jdEHiPiuTLO_8yfnxwKfLYLQMBlmz0pweuTYzNEvuAnEWXjmHFiZqiw"
+      }
+    }).subscribe((info) => {
+      console.log('user info', info);
+    }, error => {
+      console.error('Bind user failed!', error);
+    });
+  }
 }

@@ -3,7 +3,7 @@ import {environment} from 'src/environments/environment';
 
 import {EventEmitter, Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {EnvBrowserService, MY_API_URL} from '../../services/Env.service';
 
 export {User};
@@ -98,19 +98,17 @@ export class AuthService {
       this.getUser()
         .then(user => {
           this.user = user;
-          if (user) {
-            console.log('authenticated user', user);
-            console.log('authenticated user token', user.access_token);
-            this.http.get<any>(this.apiUrl + '/pod/v1/misc/auth', {
+            // console.log('authenticated user', user);
+            // console.log('authenticated user token', user.access_token);
+            this.http.get<HttpResponse<string>>(this.apiUrl + '/pod/v1/misc/auth', {
               headers: {
-                Authorization: 'Bearer ' + user.access_token
-              }
+                Authorization: 'Bearer ' + "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQwQUQ5NTE4N0Y4NEFEN0QxNkQ5NjUyMUFBQ0Y5MzVCMjgxMjQ2MzYiLCJ0eXAiOiJhdCtqd3QiLCJ4NXQiOiJRSzJWR0gtRXJYMFcyV1VocXMtVFd5Z1NSalkifQ.eyJuYmYiOjE2MDM2NzUyODgsImV4cCI6MTYwNjI2NzI4OCwiaXNzIjoiaHR0cHM6Ly9zdGFnaW5naWQudGhhbWhvYS52biIsImF1ZCI6WyJwb2QiLCJyZWFsdGltZSJdLCJjbGllbnRfaWQiOiJwb3J0YWxfc3RhZ2luZyIsInN1YiI6IjE5ZjdhNGQ3LTViMDUtNGRjOC1hZDQwLTdhYzg4ZjhkZGQzMCIsImF1dGhfdGltZSI6MTYwMzY3NTI4MywiaWRwIjoiRmFjZWJvb2siLCJlbWFpbCI6ImRhb21pbmhzYW5ndm5AZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxOWY3YTRkNy01YjA1LTRkYzgtYWQ0MC03YWM4OGY4ZGRkMzAiLCJmaXJzdG5hbWUiOiJTYW5nIiwibGFzdG5hbWUiOiJEYW8iLCJzY29wZSI6WyJwcm9maWxlIiwib3BlbmlkIiwicG9kX3dyaXRlIiwicG9kX3JlYWQiLCJyZWFsdGltZV93cml0ZSIsInJlYWx0aW1lX3JlYWQiXSwiYW1yIjpbImV4dGVybmFsIl19.EOzzoY3niwgmw_711TGcL4GguXEoZ0lMb90djPZwYu9CFgGVTU-sDM8cnGr1q9heENalJvP8OnBBtSepxdpHM8msFUM0A0cQ0u69CONuKxdrTUrNBaDj4OYK3iH_xVmvnLcn722y_5VOFJ0ceHUx7-N3wR_135FOgsr1iDAnn8pjaeA2H3bqvU0BYv6Fs-yiae6znT7NaIXTpiJ7iH99FRNu62fTukrpnCyu8Eih52Ay8dOu2YQzTWloS7lGi9bRRCmSGh9i04-Uh5YpuS1tiUOlK5ASdwC7Cc8P8o69FaZhg3moVxmNovLQFF1c3N0TKItAkpupaoYcjrRdkMVDNA"
+              },
             }).subscribe((info) => {
               console.log('user info', info);
             }, error => {
               console.error('Bind user failed!', error);
             });
-          }
         });
     }
   }

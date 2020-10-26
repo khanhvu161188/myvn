@@ -2,6 +2,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {AuthService, User} from '../auth/services/authService';
 import {HttpClient} from '@angular/common/http';
+import {MapService} from './services/map-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +16,7 @@ export class DashboardComponent implements OnInit {
     return this.authService.user;
   }
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private authService: AuthService, private http: HttpClient) {
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private authService: AuthService, private http: HttpClient, private mapService: MapService) {
 
   }
 

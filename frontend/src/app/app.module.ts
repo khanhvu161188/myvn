@@ -14,8 +14,7 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { LAZY_MAPS_API_CONFIG_KEY, MY_API_KEY } from './services/ModifierLazyMapsAPILoader';
 import { EnvBrowserService, MY_API_URL, MY_API_URL_TOKEN } from './services/Env.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import {AuthService} from './auth/services/authService';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   imports: [
@@ -23,6 +22,7 @@ import {AuthService} from './auth/services/authService';
     BrowserTransferStateModule ,
     AppRoutingModule,
     HttpClientModule,
+    SharedModule,
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
@@ -38,8 +38,7 @@ import {AuthService} from './auth/services/authService';
     AppComponent,
   ],
   providers: [
-    EnvBrowserService,
-    AuthService
+    EnvBrowserService
   ],
   bootstrap: [ AppComponent ]
 })

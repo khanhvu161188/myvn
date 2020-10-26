@@ -30,6 +30,7 @@ import { AddRequestTagsComponent } from './add-request-tags/add-request-tags.com
 import { RequestInfoComponent } from './map/request-info/request-info.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { MatMenuModule } from '@angular/material/menu';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatAutocompleteModule,
     MatIconModule,
     ScrollingModule,
-    MatMenuModule
+    MatMenuModule,
+    SharedModule
   ],
   declarations: [
     DashboardComponent,
