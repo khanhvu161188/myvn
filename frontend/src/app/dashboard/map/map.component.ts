@@ -18,6 +18,11 @@ import MarkerHighPath from "src/assets/icon-marker-high.png"
 import MarkerCriticalPath from "src/assets/icon-marker-critical.png"
 import MarkerVolunteersPath from "src/assets/icon-marker-volunteers.png"
 
+const locationOfVietNam: google.maps.LatLngLiteral = {
+  lat: 14.449619602504635,
+  lng: 108.40760241391855
+};
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -40,7 +45,7 @@ export class MapComponent implements OnInit {
   requestData: MarkerDetailData | null = null;
   volunteers: SearchVolunteersData[] = [];
   currentMap: google.maps.Map = null;
-  markerVolunteersPath = MarkerVolunteersPath
+  markerVolunteersPath = MarkerVolunteersPath;
 
   constructor(private geoService: GeoLocationService, private mapService: MapService, private _ngZone: NgZone, public dialog: MatDialog) {
   }
@@ -52,7 +57,13 @@ export class MapComponent implements OnInit {
   public mapReady(map: google.maps.Map) {
     this.currentMap = map;
 
+    // set default location is Viet Nam
+    this.currentMap.setCenter(locationOfVietNam);
+    this.currentMap.setZoom(10);
+
     map.addListener('rightclick', (e) => {
+      console.log("lat, ", e.latLng.lat());
+      console.log("lon, ", e.latLng.lng());
       this._ngZone.run(() => {
         this.onRightClick(e);
       });
@@ -224,7 +235,11 @@ export class MapComponent implements OnInit {
     this.mapIdle();
   }
 
-  public getIconPathByCrisStatus(crisStatus: MarkerDataStatus) {
+  public getIconPathByCrisStatus(id: string, crisStatus: MarkerDataStatus) {
+    if (this.selectedRequest && this.selectedRequest.id === id) {
+      return "";
+    }
+
     switch(crisStatus) {
       case MarkerDataStatus.Low:
         return MarkerLowPath;
