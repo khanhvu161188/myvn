@@ -54,6 +54,7 @@ env:
   siteDomain: siteDomain
   stsAuthority: stsAuthority
   clientId: clientId
+  BuildVersion: BuildVersion
 configValues: |
   const wConfig = {};
   wConfig.APP_API_URL = "";
