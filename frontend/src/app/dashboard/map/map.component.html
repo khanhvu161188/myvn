@@ -12,12 +12,12 @@
                   (markerClick)="clickedMarker(marker)"
                   [ngClass]="{'crisis': true, 'selected': marker.visible}"
                   [visible]="marker.visible"
-                  [iconUrl]="getIconPathByCrisStatus(marker.crisisStatus)"
+                  [iconUrl]="getIconPathByCrisStatus(marker.id, marker.crisisStatus)"
       ></agm-marker>
-      <agm-marker *ngFor="let marker of volunteers"
+      <agm-marker *ngFor="let marker of volunteers; index as i"
                   [latitude]="marker.lat"
                   [longitude]="marker.lon"
-                  label="V"
+                  [label]="(i + 1).toString()"
                   [ngClass]="{'volunteer': true}"
                   [iconUrl]="markerVolunteersPath"
       ></agm-marker>

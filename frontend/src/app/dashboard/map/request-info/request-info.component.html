@@ -21,6 +21,14 @@
   <cdk-virtual-scroll-viewport class="panel-scroll" [itemSize]="200">
     <div class="information">
       <div class="information-item">
+        <mat-icon aria-hidden="false" class="information-item-icon">access_time</mat-icon>
+        Yêu cầu giúp đỡ: {{informationTime}}
+      </div>
+      <div class="information-item">
+        <mat-icon aria-hidden="false" class="information-item-icon">people_alt</mat-icon>
+        Số người cần giúp đỡ: {{selectedRequest.personNumber}}
+      </div>
+      <div class="information-item">
         <mat-icon aria-hidden="false" class="information-item-icon">phone</mat-icon>
         Điện thoại: {{selectedRequest.contactPhone}}
       </div>
@@ -29,16 +37,8 @@
         Địa chỉ: {{selectedRequest.contactAddress}}
       </div>
       <div class="information-item">
-        <mat-icon aria-hidden="false" class="information-item-icon">access_time</mat-icon>
-        Yêu cầu giúp đỡ: {{informationTime}}
-      </div>
-      <div class="information-item">
         <mat-icon aria-hidden="false" class="information-item-icon">alt_route</mat-icon>
         Hướng dẫn đường đi: {{selectedRequest.instructionDetail}}
-      </div>
-      <div class="information-item">
-        <mat-icon aria-hidden="false" class="information-item-icon">people_alt</mat-icon>
-        Số người cần giúp đỡ: {{selectedRequest.personNumber}}
       </div>
       <div class="information-item">
         <mat-icon aria-hidden="false" class="information-item-icon">info</mat-icon>
@@ -91,11 +91,11 @@
       </div>
 
       <div class="volunteers-list">
-        <div class="volunteers-item" *ngFor="let volunteer of localVolunteers" (click)="onClickVolunteerItem(volunteer)">
+        <div class="volunteers-item" *ngFor="let volunteer of localVolunteers; index as i" (click)="onClickVolunteerItem(volunteer)">
           <div class="volunteers-item-title">
             <div class="volunteers-item-icon">
               <div class="volunteers-item-icon-signal">
-                <span class="volunteers-item-icon-signal-text">M</span>
+                <span class="volunteers-item-icon-signal-text">{{i + 1}}</span>
               </div>
             </div>
             <div class="volunteers-item-info">
