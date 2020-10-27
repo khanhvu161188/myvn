@@ -12,6 +12,8 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        timestamp: "{{ now | date "20060102150405" }}"
       labels:
         app.kubernetes.io/name: {{ include "crisis-frontend.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
@@ -40,15 +42,21 @@ spec:
             - name: stsAuthority
               value: {{default "https://stagingid.thamhoa.vn/" .Values.env.stsAuthority }}               
             - name: clientId
-              value: {{default "portal_staging" .Values.env.clientId }} 
-          #livenessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: http
-          #readinessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: http
+              value: {{default "portal_staging" .Values.env.clientId }}               
+            - name: BuildVersion
+              value: {{default "1" .Values.env.BuildVersion }} 
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http              
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
           volumeMounts:
             - name:  react-config
               mountPath: /usr/share/nginx/html/config.js

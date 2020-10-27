@@ -36,12 +36,17 @@ export function app() {
   server.get('/api/**', (req, res) => {
     res.status(404).send('data requests are not yet supported');
   });
-
+  //live and ready URLs for health check
+  server.get('/ping', (req, res) => {
+	res.send('pong')
+  })
+  server.get('/ready', (req, res) => {
+	res.send('ok')
+  })
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
-  }));
-
+  })); 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
     res.render(indexHtml, {
@@ -49,7 +54,7 @@ export function app() {
       ]
     });
   });
-
+  
   return server;
 }
 
@@ -57,7 +62,7 @@ function run() {
   const port = PORT;
 
   // Start up the Node server
-  const server = app();
+  const server = app();  
   server.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
