@@ -21,4 +21,5 @@ export const environment = {
   filterProtocolClaims: true,
   loadUserInfo: true,
   revokeAccessTokenOnSignout: true,
+  BuildVersion: 1
 };
